@@ -4,6 +4,7 @@
     PImage enemy;
     PImage go;
     PImage beach;
+    int score = 0;
     int spawnX = (int) random(1950);
     int spawnY = (int) random(1200);
     int X = spawnX;
@@ -32,6 +33,8 @@ void draw(){
       image(enemy, spawnX, spawnY);
       spawnX-=X/50;
       spawnY-=Y/50;
+      score = score+1;
+      text("Score:"+score,975,50);
       if(spawnX >=mouseX-50&&spawnX <= mouseX+50 &&spawnY >=mouseY-50&&spawnY <= mouseY+50) {
         spawnY = (int) random(1200);
         spawnX = (int) random(1950);
