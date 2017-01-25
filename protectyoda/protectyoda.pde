@@ -16,7 +16,7 @@
     boolean lose = false;
 void setup(){
   background(0);
-  size(1950, 1200);
+  size(1450, 1200);
   minim = new Minim(this);
   player = minim.loadFile("seagulls.mp3", 2048);
   player.play();
@@ -30,37 +30,37 @@ void setup(){
       guard.resize(50,50);
       help.resize(80, 80);
       enemy.resize(100, 100);
-      beach.resize(1950, 1200);
+      beach.resize(1450, 1200);
 }
 void draw(){
   if(lose == false){
   background(beach);
   image(guard, mouseX, mouseY);
         funny.resize(300, 200);
-      image(funny, 1650, 0);
+      image(funny, 1100, 0);
       image(help, 0, 0);
       image(enemy, spawnX, spawnY);
       spawnX-=X/45;
       spawnY-=Y/45;
       if(spawnX >=mouseX-50&&spawnX <= mouseX+50 &&spawnY >=mouseY-50&&spawnY <= mouseY+50) {
         spawnY = (int) random(1200);
-        spawnX = (int) random(1950);
+        spawnX = (int) random(1400);
         score = score+1;
         X = spawnX;
         Y = spawnY;
         zap.play();
       }
-      text("Score:"+score,975,50);
+      text("Score:"+score,725,50);
       if(spawnX >=0-80&&spawnX <= 0+40 &&spawnY >=0-40&&spawnY <= 0+80) {
         spawnY = (int) random(1200);
-        spawnX = (int) random(1950);
+        spawnX = (int) random(1400);
         X = spawnX;
         Y = spawnY;
         lose=true;
       }
   }
         if(lose == true){
-            go.resize(1950, 1200);
+            go.resize(1450, 1200);
           background(go);
           text("So that's how Yoda got bald... Continue?",20,20);
           text("yes", 0, 40);
