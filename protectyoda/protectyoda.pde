@@ -40,8 +40,8 @@ void draw(){
       image(funny, 1100, 0);
       image(help, 0, 0);
       image(enemy, spawnX, spawnY);
-      spawnX-=X/45;
-      spawnY-=Y/45;
+      spawnX-=X/40;
+      spawnY-=Y/40;
       if(spawnX >=mouseX-50&&spawnX <= mouseX+50 &&spawnY >=mouseY-50&&spawnY <= mouseY+50) {
         spawnY = (int) random(1200);
         spawnX = (int) random(1400);
