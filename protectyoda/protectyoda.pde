@@ -1,7 +1,8 @@
-  //  import ddf.minim.*;
-  //  AudioPlayer player;
-  //  AudioPlayer zap;
-  //  Minim minim;
+//    import ddf.minim.*;
+    import apwidgets.*;
+    APMediaPlayer player;
+    APMediaPlayer zap;
+   // Minim minim;
     PImage funny;
     PImage guard;
     PImage help;
@@ -17,10 +18,11 @@
 void setup(){
   background(0);
   size(1450, 1200);
- // minim = new Minim(this);
-//  player = minim.loadFile("seagulls.mp3", 2048);
- // player.play();
- //   zap = minim.loadFile("zap.mp3", 2048);
+  player = new APMediaPlayer(this);
+// player = minim.loadFile("seagulls.mp3", 2048);
+      player.setMediaFile("seagulls.mp3");
+     player.start();
+      zap.setMediaFile("seagulls.mp3");
       funny = loadImage("yodapuns.jpg");
       guard = loadImage("lightsaber.png");
       help =  loadImage("yoda.jpg");
@@ -48,7 +50,7 @@ void draw(){
         score = score+1;
         X = spawnX;
         Y = spawnY;
-     //   zap.play();
+        zap.start();
       }
       text("Score:"+score,725,50);
       if(spawnX >=0-80&&spawnX <= 0+40 &&spawnY >=0-40&&spawnY <= 0+80) {
@@ -65,7 +67,7 @@ void draw(){
           textSize(30);
           text("So that's how Yoda got bald... Click anywhere to continue",20,20);
           color(255, 255, 255);
-          text("Score:"+score,975,50);
+          text("Score:"+score,575,50);
         }
 }
 /*void stop()
@@ -75,9 +77,6 @@ void draw(){
   super.stop();
 }*/
 void mousePressed(){
-  if (mousePressed){
    lose = false;
    score = 0;
-   //brave cross
-  }
 }
