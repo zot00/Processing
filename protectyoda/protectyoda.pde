@@ -22,6 +22,7 @@ void setup(){
 // player = minim.loadFile("seagulls.mp3", 2048);
       player.setMediaFile("seagulls.mp3");
      player.start();
+       player.setLooping(true);
       zap.setMediaFile("seagulls.mp3");
       funny = loadImage("yodapuns.jpg");
       guard = loadImage("lightsaber.png");
