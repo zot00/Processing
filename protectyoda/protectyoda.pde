@@ -10,14 +10,14 @@
     PImage go;
     PImage beach;
     int score = 0;
-    float spawnX = random(1950);
-    float spawnY = random(1200);
+    float spawnX = random(width, width);
+    float spawnY = random(height, height);
     float X = spawnX;
     float Y = spawnY;
     boolean lose = false;
 void setup(){
   background(0);
-  size(1450, 1200);
+  size(displayWidth, displayHeight);
   player = new APMediaPlayer(this);
 // player = minim.loadFile("seagulls.mp3", 2048);
       player.setMediaFile("seagulls.mp3");
