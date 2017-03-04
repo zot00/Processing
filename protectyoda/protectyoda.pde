@@ -1,7 +1,7 @@
 //    import ddf.minim.*;
     import apwidgets.*;
-    APMediaPlayer player;
-    APMediaPlayer zap;
+    PMediaPlayer player;
+    PMediaPlayer zap;
    // Minim minim;
     PImage funny;
     PImage guard;
@@ -18,13 +18,18 @@
 void setup(){
   background(0);
   size(displayWidth, displayHeight);
-  player = new APMediaPlayer(this);
+//  player = new APMediaPlayer(this);
+  player = new PMediaPlayer(this); //create new APMediaPlayer
+  player.setMediaFile("seagulls.mp3"); //set the file (files are in data folder)
+  player.start(); //start play back
+  player.setLooping(true); //restart playback end reached
+  player.setVolume(1.0, 1.0); //Set left and right volumes. Range is from 0.0 to 1.0
 // player = minim.loadFile("seagulls.mp3", 2048);
-      player.setMediaFile("seagulls.mp3");
+   /*   player.setMediaFile("seagulls.mp3");
      player.start();
        player.setLooping(true);
       zap.setMediaFile("seagulls.mp3");
-      funny = loadImage("yodapuns.jpg");
+      funny = loadImage("yodapuns.jpg");*/
       guard = loadImage("lightsaber.png");
       help =  loadImage("yoda.jpg");
       enemy = loadImage("wingull.png");
