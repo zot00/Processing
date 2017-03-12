@@ -13,13 +13,13 @@ void draw() {
   pX = mouseX;
   pY = mouseY;
   background(0);
-    fill(0, 255, 0);
-    ellipse(bX, bY, 10, 10);
-      fill(255, 0, 0);
+  fill(0, 255, 0);
+  ellipse(bX, bY, 10, 10);
+  fill(255, 0, 0);
   ellipse(enX, enY, 50, 50);
-    fill(0, 0, 255);
+  fill(0, 0, 255);
   ellipse(pX, pY, 50, 50);
-  enX = pY - enX;
+  enX = pY - enX+30;
   enY = pX - enY;
   if (enX>bX) {
     bX=bX+5;
@@ -33,27 +33,40 @@ void draw() {
   if (enY<bY) {
     bY=bY-5;
   }
-  if(enY>=1000){
-   enX = (int) random(0, 1500);
-   enY = (int) random(0, 1000);
+  if (enY>=1000) {
+    enX = (int) random(0, 1500);
+    enY = (int) random(0, 1000);
   }
-  if(enX>=1500){
-   enX = (int) random(0, 1500);
-   enY = (int) random(0, 1000);
+  if (enX>=1500) {
+    enX = (int) random(0, 1500);
+    enY = (int) random(0, 1000);
   }
-  if(enY<=0){
-   enX = (int) random(0, 1500);
-   enY = (int) random(0, 1000);
+  if (enY<=0) {
+    enX = (int) random(0, 1500);
+    enY = (int) random(0, 1000);
   }
-  if(enY<=0){
-   enX = (int) random(0, 1500);
-   enY = (int) random(0, 1000);
+  if (enY<=0) {
+    enX = (int) random(0, 1500);
+    enY = (int) random(0, 1000);
   }
-  if(bX == enX){
+  if (bX <= enX+50&&bY <= enY+50&&bX>=enX-50&&bY>=enY-50) {
     enH--;
     bX = mouseX;
     bY = mouseY;
   }
+  if (pX>bX) {
+    bX=bX+5;
+  }
+  if (enX<bX) {
+    bX=bX-5;
+  }
+  if (enY>bY) {
+    bY=bY+5;
+  }
+  if (enY<bY) {
+    bY=bY-5;
+  }
+  text("Player Health: " + pH, 100, 100);
 }
 void mousePressed() {
   bX = pX;
