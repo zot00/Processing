@@ -114,8 +114,6 @@ void draw() {
   if(enH<=0){
     text("I win!", 620, 700);
     text("Goodwill!!!!!!!!!", 620, 800);
-    text("I win!", 620, 500);
-    text("Goodwill!!!!!!!!!", 620, 600);
   }
 }
 void mousePressed() {
