@@ -89,7 +89,11 @@ void draw() {
   if (enY<bY) {
     bY=bY-5;
   }
+<<<<<<< HEAD
   if (btX <= pX+50&&btY <= pY+50&&btX>=pX-50&&btY>=pY-50) {
+=======
+  if (btX <= pX&&btY <= pY&&btX>=pX&&btY>=pY) {
+>>>>>>> origin/master
     pH = pH - (int) random(0, 10);
     btX = enX;
     btY = enY;
@@ -113,8 +117,13 @@ void draw() {
     text("I knew I shouldn't have bought my tank on ebay...", 620, 600);
   }
   if(enH<=0){
+<<<<<<< HEAD
     text("I win!", 620, 700);
     text("Goodwill!!!!!!!!!", 620, 800);
+=======
+    text("I win!", 620, 500);
+    text("Goodwill!!!!!!!!!", 620, 600);
+>>>>>>> origin/master
   }
 }
 void mousePressed() {
