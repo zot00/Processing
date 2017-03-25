@@ -151,11 +151,13 @@ void draw() {
   text("Player Health: " + pH, 100, 100);
   text("Enemy Health: " + enH, 1000, 1000);
   if (pH<=0) {
+    aww.setVolume(1000);
     aww.play();
     text("Game Over.", 620, 500);
     text("I knew I shouldn't have bought my tank on ebay...", 620, 600);
   }
   if (enH<=0) {
+    yay.setVolume(1000);
     yay.play();
     text("I win!", 620, 700);
     text("Ebay!!!!!!!!!", 620, 800);
