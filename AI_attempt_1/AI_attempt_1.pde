@@ -15,8 +15,8 @@ int btY = enY;
 int bY = mouseY;
 int pX = mouseX;
 int pY = mouseY;
-int enH = 500;
-int pH = 100;
+int enH = (int) random(100, 500);
+int pH = (int) random(0,200);
 void setup() {
   fullScreen();
   minim = new Minim(this);
@@ -74,16 +74,16 @@ void draw() {
     bY=bY-5;
   }
   if (pX>btX) {
-    btX=btX+1;
+    btX=btX+5;
   }
   if (pX<btX) {
-    btX=btX-1;
+    btX=btX-5;
   }
   if (pY>btY) {
-    btY=btY+1;
+    btY=btY+5;
   }
   if (pY<btY) {
-    btY=btY-1;
+    btY=btY-5;
   }
   if (enY>=1000) {
     enX = (int) random(0, 1500);
@@ -103,12 +103,17 @@ void draw() {
   }
   if (bX <= enX+50&&bY <= enY+50&&bX>=enX-50&&bY>=enY-50) {
     enH = enH - (int) random(0, 10);
+    btX = enX;
+    btY = enY;
     bX = mouseX;
     bY = mouseY;
     shoot.rewind();
     explode.rewind();
     explode.play();
     shoot.play();
+    ellipse(btX, btY, 10, 10);
+  shoot.play();
+  shoot.rewind();
   }
   if (enX>bX) {
     bX=bX+5;
@@ -153,7 +158,7 @@ void draw() {
   if (enH<=0) {
     yay.play();
     text("I win!", 620, 700);
-    text("Goodwill!!!!!!!!!", 620, 800);
+    text("Ebay!!!!!!!!!", 620, 800);
   }
 }
 void mousePressed() {
