@@ -18,7 +18,7 @@ int bY = mouseY;
 int pX = mouseX;
 int pY = mouseY;
 int enH = 500;
-int pH = 200;
+int pH = (int) random(200, 350);
 void setup() {
   size(2000, 1100);
   minim = new Minim(this);
