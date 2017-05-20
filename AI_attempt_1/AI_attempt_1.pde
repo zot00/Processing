@@ -253,16 +253,16 @@ void draw() {
       shoot.play();
     }
     if (pX>btX) {
-      btX=btX+15;
+      btX=btX+50;
     }
     if (pX<btX) {
-      btX=btX-15;
+      btX=btX-50;
     }
     if (pY>btY) {
-      btY=btY+15;
+      btY=btY+50;
     }
     if (pY<btY) {
-      btY=btY-15;
+      btY=btY-50;
     }
     text("Player Health: " + pH, 100, 100);
     text("Enemy Health: " + enH, 900, 900);
