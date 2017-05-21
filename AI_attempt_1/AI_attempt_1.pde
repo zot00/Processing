@@ -253,16 +253,16 @@ void draw() {
       shoot.play();
     }
     if (pX>btX) {
-      btX=btX+50;
+      btX=btX+15;
     }
     if (pX<btX) {
-      btX=btX-50;
+      btX=btX-15;
     }
     if (pY>btY) {
-      btY=btY+50;
+      btY=btY+15;
     }
     if (pY<btY) {
-      btY=btY-50;
+      btY=btY-15;
     }
     text("Player Health: " + pH, 100, 100);
     text("Enemy Health: " + enH, 900, 900);
@@ -303,4 +303,3 @@ void mousePressed() {
   shoot.play();
   shoot.rewind();
 }
-
