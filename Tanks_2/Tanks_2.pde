@@ -37,25 +37,41 @@ void enemyMovement() {
     if (i == 'i' || key == 'I') {
       enY = enY - 10;
     }
+    if (enX>width || enY>height) {
+      enX = width-25;
+      enY = height-25;
+    }
+    if (enX<0||enY <0) {
+      enX = width-25;
+      enY = height-25;
+    }
   }
 }
 void playerMovement() {
   fill(255, 255, 0);
   ellipse(pX, pY, 50, 50);
-    for (Character i : keys) {
-      if (i == 'a' || key == 'A') {
-        pX = pX - 10;
-      }
-      if (i == 'd' || key == 'D') {
-        pX = pX + 10;
-      }
-      if (i == 's' || key == 'S') {
-        pY = pY + 10;
-      }
-      if (i == 'w' || key == 'W') {
-        pY = pY - 10;
-      }
+  for (Character i : keys) {
+    if (i == 'a' || key == 'A') {
+      pX = pX - 10;
     }
+    if (i == 'd' || key == 'D') {
+      pX = pX + 10;
+    }
+    if (i == 's' || key == 'S') {
+      pY = pY + 10;
+    }
+    if (i == 'w' || key == 'W') {
+      pY = pY - 10;
+    }
+    if (pX>width || pY>height) {
+      pX = 25;
+      pY = 25;
+    }
+    if (pX<0||pY <0) {
+      pX = 25;
+      pY = 25;
+    }
+  }
 }
 void keyPressed() {
   if (!keys.contains(key)) {
@@ -92,18 +108,6 @@ void bullet() {
     bX = pX;
     bY = pY;
   }
-  /*if (enX>bX) {
-    bX=bX+10;
-  }
-  if (enX<bX) {
-    bX=bX-10;
-  }
-  if (enY>bY) {
-    bY=bY+10;
-  }
-  if (enY<bY) {
-    bY=bY-10;
-  }*/
   if (btX <= pX+50&&btY <= pY+50&&btX>=pX-50&&btY>=pY-50) {
     pH = pH - (int) random(0, 10);
     btX = enX;
@@ -117,9 +121,9 @@ void bullet() {
 }
 void keyReleased() {
   //if (key == CODED) {
-   // println(specialKeys);
-    //specialKeys.remove((Integer)keyCode);
+  // println(specialKeys);
+  //specialKeys.remove((Integer)keyCode);
   //} else {
-    keys.remove((Character)key);
+  keys.remove((Character)key);
   //}
 }
