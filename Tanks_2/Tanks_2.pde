@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import ddf.minim.*;
+AudioPlayer player;
+Minim minim;
+PImage field;
 int pX = 25;
 int pY = 25;
 int enX = 1895;
@@ -13,9 +17,15 @@ ArrayList<Character> specialKeys = new ArrayList<Character>();
 ArrayList<Character> keys = new ArrayList<Character>();
 void setup() {
   fullScreen();
+  minim = new Minim(this);
+  player = minim.loadFile("battlemusic.mp3", 2048);
+  player.setVolume(1);
+        player.play();
+        field = loadImage("battlefield.jpg");
+        field.resize(width,height);
 }
 void draw() {
-  background(255);
+  background(field);
   enemyMovement();
   playerMovement();
   bullet();
@@ -79,29 +89,30 @@ void keyPressed() {
   }
 }
 void bullet() {
+  int bs = 15;
   if (enX>bX) {
-    bX=bX+10;
+    bX=bX+bs;
   }
   if (enX<bX) {
-    bX=bX-10;
+    bX=bX-bs;
   }
   if (enY>bY) {
-    bY=bY+10;
+    bY=bY+bs;
   }
   if (enY<bY) {
-    bY=bY-10;
+    bY=bY-bs;
   }
   if (pX>btX) {
-    btX=btX+10;
+    btX=btX+bs;
   }
   if (pX<btX) {
-    btX=btX-10;
+    btX=btX-bs;
   }
   if (pY>btY) {
-    btY=btY+10;
+    btY=btY+bs;
   }
   if (pY<btY) {
-    btY=btY-10;
+    btY=btY-bs;
   }
   if (bX <= enX+50&&bY <= enY+50&&bX>=enX-50&&bY>=enY-50) {
     enH = enH - (int) random(0, 10);
@@ -113,11 +124,29 @@ void bullet() {
     btX = enX;
     btY = enY;
   }
+  fill(random(0, 255), random(0,255), random(0, 255));
   ellipse(bX, bY, 10, 10);
   ellipse(btX, btY, 10, 10);
-  fill(0);
-  text("Player 1 Health: " + pH, 100, 100);
-  text("Player 2 Health: " + enH, 900, 900);
+  text("Player 1 (Yellow) Health: " + pH, 100, 100);
+  text("Player 2 (Blue) Health: " + enH, 900, 900);
+  if (enH <= 0) {
+    enH = 0;
+    text("Player 1 (Yellow) wins!", 200, 200);
+    text("Staring contest...?", 500, 500);
+    btY = enY;
+    btX = enX;
+    bX = pX;
+    bY = pY;
+  }
+  if(pH <= 0){
+    pH = 0;
+    text("Player 2 (Blue) wins!", 300, 300);
+    text("Staring contest...?", 600, 600);
+    btY = enY;
+    btX = enX;
+    bX = pX;
+    bY = pY;
+  }
 }
 void keyReleased() {
   //if (key == CODED) {
