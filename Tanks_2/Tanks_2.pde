@@ -18,7 +18,7 @@ ArrayList<Character> keys = new ArrayList<Character>();
 void setup() {
   fullScreen();
   minim = new Minim(this);
-  player = minim.loadFile("battlemusic.mp3", 2048);
+  player = minim.loadFile("fight.mp3", 2048);
   player.setVolume(1);
         player.play();
         field = loadImage("battlefield.jpg");
@@ -114,12 +114,12 @@ void bullet() {
   if (pY<btY) {
     btY=btY-bs;
   }
-  if (bX <= enX+50&&bY <= enY+50&&bX>=enX-50&&bY>=enY-50) {
+  if (bX <= enX+25&&bY <= enY+50&&bX>=enX-25&&bY>=enY-25) {
     enH = enH - (int) random(0, 10);
     bX = pX;
     bY = pY;
   }
-  if (btX <= pX+50&&btY <= pY+50&&btX>=pX-50&&btY>=pY-50) {
+  if (btX <= pX+25&&btY <= pY+25&&btX>=pX-25&&btY>=pY-25) {
     pH = pH - (int) random(0, 10);
     btX = enX;
     btY = enY;
@@ -127,12 +127,12 @@ void bullet() {
   fill(random(0, 255), random(0,255), random(0, 255));
   ellipse(bX, bY, 10, 10);
   ellipse(btX, btY, 10, 10);
-  text("Player 1 (Yellow) Health: " + pH, 100, 100);
-  text("Player 2 (Blue) Health: " + enH, 900, 900);
+  text("Player 1 (Yellow) Health: " + pH, 150, 100);
+  text("Player 2 (Blue) Health: " + enH, 350, 100);
   if (enH <= 0) {
     enH = 0;
-    text("Player 1 (Yellow) wins!", 200, 200);
-    text("Staring contest...?", 500, 500);
+    text("Player 1 (Yellow) wins!", 150, 200);
+    text("Staring contest...?", 25, 150);
     btY = enY;
     btX = enX;
     bX = pX;
@@ -140,8 +140,8 @@ void bullet() {
   }
   if(pH <= 0){
     pH = 0;
-    text("Player 2 (Blue) wins!", 300, 300);
-    text("Staring contest...?", 600, 600);
+    text("Player 2 (Blue) wins!", 350, 200);
+    text("Staring contest...?", 550, 150);
     btY = enY;
     btX = enX;
     bX = pX;
