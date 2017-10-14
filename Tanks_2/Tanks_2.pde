@@ -18,9 +18,20 @@ ArrayList<Character> keys = new ArrayList<Character>();
 void setup() {
   fullScreen();
   minim = new Minim(this);
-  player = minim.loadFile("fight.mp3", 2048);
-  player.setVolume(1);
-        player.play();
+  int r = (int) random(0, 3);
+  if(r == 0){
+  player = minim.loadFile("fight.mp3", 1024);
+    player.setVolume(.01);
+  }
+  if(r == 1){
+   player = minim.loadFile("othersong.mp3", 1024); 
+     player.setVolume(.1);
+  }
+  if(r == 2){
+    player = minim.loadFile("fightingmusic.mp3", 1024);
+      player.setVolume(.1);
+  }
+        player.loop();
         field = loadImage("battlefield.jpg");
         field.resize(width,height);
 }
@@ -35,16 +46,16 @@ void enemyMovement() {
   ellipse(enX, enY, 50, 50);
   //println("p");
   for (Character i : keys) {
-    if (i == 'j' || key == 'J') {
+    if (i == 'j') {
       enX = enX - 10;
     }
-    if (i == 'l' || key == 'L') {
+    if (i == 'l') {
       enX = enX + 10;
     }
-    if (i == 'k' || key == 'K') {
+    if (i == 'k') {
       enY = enY + 10;
     }
-    if (i == 'i' || key == 'I') {
+    if (i == 'i') {
       enY = enY - 10;
     }
     if (enX>width || enY>height) {
@@ -61,16 +72,16 @@ void playerMovement() {
   fill(255, 255, 0);
   ellipse(pX, pY, 50, 50);
   for (Character i : keys) {
-    if (i == 'a' || key == 'A') {
+    if (i == 'a') {
       pX = pX - 10;
     }
-    if (i == 'd' || key == 'D') {
+    if (i == 'd') {
       pX = pX + 10;
     }
-    if (i == 's' || key == 'S') {
+    if (i == 's') {
       pY = pY + 10;
     }
-    if (i == 'w' || key == 'W') {
+    if (i == 'w') {
       pY = pY - 10;
     }
     if (pX>width || pY>height) {
