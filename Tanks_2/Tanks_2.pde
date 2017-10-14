@@ -13,6 +13,8 @@ int bX = pX;
 int bY = pY;
 int btX = enX;
 int btY = enY;
+int h = (int) random(0, 10);
+int p = (int) random(0, 10);
 ArrayList<Character> specialKeys = new ArrayList<Character>();
 ArrayList<Character> keys = new ArrayList<Character>();
 void setup() {
@@ -126,12 +128,12 @@ void bullet() {
     btY=btY-bs;
   }
   if (bX <= enX+25&&bY <= enY+50&&bX>=enX-25&&bY>=enY-25) {
-    enH = enH - (int) random(0, 10);
+    enH = enH-p;
     bX = pX;
     bY = pY;
   }
   if (btX <= pX+25&&btY <= pY+25&&btX>=pX-25&&btY>=pY-25) {
-    pH = pH - (int) random(0, 10);
+    pH = pH-h;
     btX = enX;
     btY = enY;
   }
@@ -148,9 +150,13 @@ void bullet() {
     btX = enX;
     bX = pX;
     bY = pY;
+    p = 0;
+    h = 0;
   }
   if(pH <= 0){
     pH = 0;
+    p = 0;
+    h = 0;
     text("Player 2 (Blue) wins!", 350, 200);
     text("Staring contest...?", 550, 150);
     btY = enY;
