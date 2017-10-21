@@ -4,6 +4,7 @@ AudioPlayer player;
 Minim minim;
 PImage field;
 int pX = 25;
+boolean intutorial = true;
 int pY = 25;
 int enX = 1895;
 int enY = 1055;
@@ -21,27 +22,49 @@ void setup() {
   fullScreen();
   minim = new Minim(this);
   int r = (int) random(0, 3);
-  if(r == 0){
-  player = minim.loadFile("fight.mp3", 1024);
+  if (r == 0) {
+    //Zinnia's song
+    player = minim.loadFile("fight.mp3", 1024);
     player.setVolume(.01);
   }
-  if(r == 1){
-   player = minim.loadFile("othersong.mp3", 1024); 
-     player.setVolume(.1);
+  if (r == 1) {
+    // de ja vu
+    player = minim.loadFile("othersong.mp3", 1024); 
+    player.setVolume(.1);
   }
-  if(r == 2){
+  if (r == 2) {
+    //epic battle music
     player = minim.loadFile("fightingmusic.mp3", 1024);
-      player.setVolume(.1);
+    player.setVolume(.1);
   }
-        player.loop();
-        field = loadImage("battlefield.jpg");
-        field.resize(width,height);
+  field = loadImage("battlefield.jpg");
+  player.loop();
+  field.resize(width, height);
 }
 void draw() {
-  background(field);
-  enemyMovement();
-  playerMovement();
-  bullet();
+  if (intutorial == true) {
+    background(255);
+    fill(255, 0, 0);
+    text("Tips:", 40, 40);
+    fill(0);
+    text("You will need to destroy your enemy's tank and survive.", 40, 70);
+    text("Your bullets can do any amount of damage from 0 to 10.", 40, 160);
+    text("Your bullets track the enemy.", 40, 90);
+    text("A bad strategy is to chase your opponent.", 40, 110);
+    text("A good strategy is to use the walls to your advantage.", 40, 130);
+    fill(255, 0, 0);
+    text("Instructions:", 40, 210);
+    fill(0);
+    text("Yellow tank moves with WASD. Blue tank moves with IJKL.", 40, 240);
+    text("Your and your enemy's bullets fire automatically.", 40, 270);
+    text("That is all. Click anywhere to start the game.", 40, 360);
+  }
+  if (intutorial == false) {
+    background(field);
+    enemyMovement();
+    playerMovement();
+    bullet();
+  }
 }
 void enemyMovement() {
   fill(0, 255, 255);
@@ -137,7 +160,7 @@ void bullet() {
     btX = enX;
     btY = enY;
   }
-  fill(random(0, 255), random(0,255), random(0, 255));
+  fill(random(0, 255), random(0, 255), random(0, 255));
   ellipse(bX, bY, 10, 10);
   ellipse(btX, btY, 10, 10);
   text("Player 1 (Yellow) Health: " + pH, 150, 100);
@@ -153,7 +176,7 @@ void bullet() {
     p = 0;
     h = 0;
   }
-  if(pH <= 0){
+  if (pH <= 0) {
     pH = 0;
     p = 0;
     h = 0;
@@ -166,10 +189,8 @@ void bullet() {
   }
 }
 void keyReleased() {
-  //if (key == CODED) {
-  // println(specialKeys);
-  //specialKeys.remove((Integer)keyCode);
-  //} else {
   keys.remove((Character)key);
-  //}
+}
+void mousePressed() {
+  intutorial = false;
 }
