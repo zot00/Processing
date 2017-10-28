@@ -25,11 +25,13 @@ void setup() {
   if (r == 0) {
     //Zinnia's song
     player = minim.loadFile("fight.mp3", 1024);
+    //player = minim.loadFile("fightingmusic.mp3", 1024);
     player.setVolume(.01);
   }
   if (r == 1) {
     // de ja vu
     player = minim.loadFile("othersong.mp3", 1024); 
+    //player = minim.loadFile("fightingmusic.mp3", 1024);
     player.setVolume(.1);
   }
   if (r == 2) {
@@ -61,9 +63,9 @@ void draw() {
   }
   if (intutorial == false) {
     background(field);
+    bullet();
     enemyMovement();
     playerMovement();
-    bullet();
   }
 }
 void enemyMovement() {
@@ -125,67 +127,86 @@ void keyPressed() {
   }
 }
 void bullet() {
-  int bs = 15;
-  if (enX>bX) {
-    bX=bX+bs;
+  if (enH<=0||pH <=0) {
+    if (enH <= 0) {
+      p = 0;
+      h = 0;
+      enH = 0;
+      fill(random(0, 255), random(0, 255), random(0, 255));
+      text("Player 1 (Yellow) wins!", 150, 200);
+      btY = enY;
+      btX = enX;
+      bX = pX;
+      bY = pY;
+      p = 0;
+      h = 0;
+      fill(random(0, 255), random(0, 255), random(0, 255));
+      ellipse(bX, bY, 10, 10);
+      ellipse(btX, btY, 10, 10);
+      text("Player 1 (Yellow) Health: " + pH, 150, 100);
+      text("Player 2 (Blue) Health: " + enH, 350, 100);
+    }
+    if (pH <= 0) {
+      p = 0;
+      h = 0;
+      pH = 0;
+      fill(random(0, 255), random(0, 255), random(0, 255));
+      text("Player 2 (Blue) wins!", 350, 200);
+      btY = enY;
+      btX = enX;
+      bX = pX;
+      bY = pY;
+      fill(random(0, 255), random(0, 255), random(0, 255));
+      ellipse(bX, bY, 10, 10);
+      ellipse(btX, btY, 10, 10);
+      text("Player 1 (Yellow) Health: " + pH, 150, 100);
+      text("Player 2 (Blue) Health: " + enH, 350, 100);
+    }
   }
-  if (enX<bX) {
-    bX=bX-bs;
-  }
-  if (enY>bY) {
-    bY=bY+bs;
-  }
-  if (enY<bY) {
-    bY=bY-bs;
-  }
-  if (pX>btX) {
-    btX=btX+bs;
-  }
-  if (pX<btX) {
-    btX=btX-bs;
-  }
-  if (pY>btY) {
-    btY=btY+bs;
-  }
-  if (pY<btY) {
-    btY=btY-bs;
-  }
-  if (bX <= enX+25&&bY <= enY+50&&bX>=enX-25&&bY>=enY-25) {
-    enH = enH-p;
-    bX = pX;
-    bY = pY;
-  }
-  if (btX <= pX+25&&btY <= pY+25&&btX>=pX-25&&btY>=pY-25) {
-    pH = pH-h;
-    btX = enX;
-    btY = enY;
-  }
-  fill(random(0, 255), random(0, 255), random(0, 255));
-  ellipse(bX, bY, 10, 10);
-  ellipse(btX, btY, 10, 10);
-  text("Player 1 (Yellow) Health: " + pH, 150, 100);
-  text("Player 2 (Blue) Health: " + enH, 350, 100);
-  if (enH <= 0) {
-    enH = 0;
-    text("Player 1 (Yellow) wins!", 150, 200);
-    text("Staring contest...?", 25, 150);
-    btY = enY;
-    btX = enX;
-    bX = pX;
-    bY = pY;
-    p = 0;
-    h = 0;
-  }
-  if (pH <= 0) {
-    pH = 0;
-    p = 0;
-    h = 0;
-    text("Player 2 (Blue) wins!", 350, 200);
-    text("Staring contest...?", 550, 150);
-    btY = enY;
-    btX = enX;
-    bX = pX;
-    bY = pY;
+  if (enH!=0||pH!=0) {
+    h = (int) random(0, 10);
+    p = (int) random(0, 10);
+    int bs = 15;
+    if (enX>bX) {
+      bX=bX+bs;
+    }
+    if (enX<bX) {
+      bX=bX-bs;
+    }
+    if (enY>bY) {
+      bY=bY+bs;
+    }
+    if (enY<bY) {
+      bY=bY-bs;
+    }
+    if (pX>btX) {
+      btX=btX+bs;
+    }
+    if (pX<btX) {
+      btX=btX-bs;
+    }
+    if (pY>btY) {
+      btY=btY+bs;
+    }
+    if (pY<btY) {
+      btY=btY-bs;
+    }
+    if (bX <= enX+25&&bY <= enY+50&&bX>=enX-25&&bY>=enY-25) {
+      enH = enH-p;
+      bX = pX;
+      bY = pY;
+    }
+    if (btX <= pX+25&&btY <= pY+25&&btX>=pX-25&&btY>=pY-25) {
+      pH = pH-h;
+      btX = enX;
+      btY = enY;
+    }
+    fill(random(0, 255), random(0, 255), random(0, 255));
+    ellipse(bX, bY, 10, 10);
+    ellipse(btX, btY, 10, 10);
+    fill(random(0, 255), random(0, 255), random(0, 255));
+    text("Player 1 (Yellow) Health: " + pH, 150, 100);
+    text("Player 2 (Blue) Health: " + enH, 350, 100);
   }
 }
 void keyReleased() {
