@@ -6,22 +6,26 @@ PImage field;
 int pX = 25;
 boolean intutorial = true;
 int pY = 25;
-int enX = 1895;
-int enY = 1055;
+float enX = 1895;
+float enY = 1055;
 int pH = 500;
 int enH = 500;
+int enGX = (int) random(0, width);
+int enGY = (int) random(0, height);
 int bX = pX;
 int bY = pY;
-int btX = enX;
-int btY = enY;
+float btX = enX;
+float btY = enY;
 int h = (int) random(0, 10);
 int p = (int) random(0, 10);
+boolean opmode = false;
+boolean tpmode = false;
 ArrayList<Character> specialKeys = new ArrayList<Character>();
 ArrayList<Character> keys = new ArrayList<Character>();
 void setup() {
   fullScreen();
   minim = new Minim(this);
-  int r = (int) random(0, 3);
+  int r = (int) random(0, 4);
   if (r == 0) {
     //Zinnia's song
     player = minim.loadFile("fight.mp3", 1024);
@@ -37,6 +41,11 @@ void setup() {
   if (r == 2) {
     //epic battle music
     player = minim.loadFile("fightingmusic.mp3", 1024);
+    player.setVolume(.1);
+  }
+  if (r ==3) {
+    //Running in the 90's
+    player = minim.loadFile("HA.mp3", 1024);
     player.setVolume(.1);
   }
   field = loadImage("battlefield.jpg");
@@ -59,13 +68,19 @@ void draw() {
     fill(0);
     text("Yellow tank moves with WASD. Blue tank moves with IJKL.", 40, 240);
     text("Your and your enemy's bullets fire automatically.", 40, 270);
-    text("That is all. Click anywhere to start the game.", 40, 360);
+    text("That is all. Type o for one player, and t for two players.", 40, 360);
   }
-  if (intutorial == false) {
+  if (intutorial == false && tpmode == true) {
     background(field);
     bullet();
     enemyMovement();
     playerMovement();
+  }
+  if (intutorial == false && opmode == true) {
+    background(field);
+    enCPU();
+    playerMovement();
+    opbullet();
   }
 }
 void enemyMovement() {
@@ -121,9 +136,151 @@ void playerMovement() {
     }
   }
 }
-void keyPressed() {
-  if (!keys.contains(key)) {
-    keys.add(key);
+void enCPU() {
+  fill(0, 255, 255);
+  ellipse(enX, enY, 50, 50);
+  if (enH>250) {
+    float enGX = pX;
+    float enGY = pY;
+    if (enX>enGX) {
+      enX = enX - 10;
+    }
+    if (enY>enGY) {
+      enY = enY - 10;
+    }
+    if (enX<enGX) {
+      enX = enX + 10;
+    }
+    if (enY<enGY) {
+      enY = enY + 10;
+    }
+  }
+  if (enH<=250) {
+    println("engx: " + enGX + "; engy: " + enGY);
+    println("enx: " + enX + "; eny: " + enY);
+    if (enX>enGX) {
+      enX = enX - 10;
+    }
+    if (enY>enGY) {
+      enY = enY - 10;
+    }
+    if (enX<enGX) {
+      enX = enX + 10;
+    }
+    if (enY<enGY) {
+      enY = enY + 10;
+    }
+    float disLeft = enX-enGX;
+    if(disLeft<10){
+      enX-=disLeft;
+    } else {
+      enX-=10;
+    }
+    float disRight = enGX-enX;
+    if(disRight<10){
+      enX+=disRight;
+    } else {
+      enX+=10;
+    }
+    float disUp = enY-enGY;
+    if(disUp<10){
+      enY-=disUp;
+    } else {
+      enY-=10;
+    }
+    float disDown = enY-enGY;
+    if(disDown<10){
+      enY+=disDown;
+    } else {
+      enY+=10;
+    }
+    if (enX == enGX && enY == enGY) {
+      enGX = (int) random(0, width);
+      enGY = (int) random(0, height);
+    }
+  }
+}
+void opbullet() {
+  if (enH<=0||pH <=0) {
+    if (enH <= 0) {
+      p = 0;
+      h = 0;
+      enH = 0;
+      fill(random(0, 255), random(0, 255), random(0, 255));
+      text("The player wins!", 150, 200);
+      btY = enY;
+      btX = enX;
+      bX = pX;
+      bY = pY;
+      p = 0;
+      h = 0;
+      fill(random(0, 255), random(0, 255), random(0, 255));
+      ellipse(bX, bY, 10, 10);
+      ellipse(btX, btY, 10, 10);
+      text("Player's (Yellow) Health: " + pH, 150, 100);
+      text("Enemy's (Blue) Health: " + enH, 350, 100);
+    }
+    if (pH <= 0) {
+      p = 0;
+      h = 0;
+      pH = 0;
+      fill(random(0, 255), random(0, 255), random(0, 255));
+      text("The enemy (Blue) wins!", 350, 200);
+      btY = enY;
+      btX = enX;
+      bX = pX;
+      bY = pY;
+      fill(random(0, 255), random(0, 255), random(0, 255));
+      ellipse(bX, bY, 10, 10);
+      ellipse(btX, btY, 10, 10);
+      text("Player's (Yellow) Health: " + pH, 150, 100);
+      text("Enemy's (Blue) Health: " + enH, 350, 100);
+    }
+  }
+  if (enH!=0||pH!=0) {
+    h = (int) random(0, 10);
+    p = (int) random(0, 10);
+    int bs = 15;
+    if (enX>bX) {
+      bX=bX+bs;
+    }
+    if (enX<bX) {
+      bX=bX-bs;
+    }
+    if (enY>bY) {
+      bY=bY+bs;
+    }
+    if (enY<bY) {
+      bY=bY-bs;
+    }
+    if (pX>btX) {
+      btX=btX+bs;
+    }
+    if (pX<btX) {
+      btX=btX-bs;
+    }
+    if (pY>btY) {
+      btY=btY+bs;
+    }
+    if (pY<btY) {
+      btY=btY-bs;
+    }
+    if (bX <= enX+25&&bY <= enY+50&&bX>=enX-25&&bY>=enY-25) {
+      enH = enH-p;
+      bX = pX;
+      bY = pY;
+    }
+    if (btX <= pX+25&&btY <= pY+25&&btX>=pX-25&&btY>=pY-25) {
+      pH = pH-h;
+      btX = enX;
+      btY = enY;
+    }
+    fill(random(0, 255), random(0, 255), random(0, 255));
+    ellipse(bX, bY, 10, 10);
+    ellipse(btX, btY, 10, 10);
+    fill(random(0, 255), random(0, 255), random(0, 255));
+    text("Player's (Yellow) Health: " + pH, 150, 100);
+    text("Enemy's (Blue) Health: " + enH, 350, 100);
   }
 }
 void bullet() {
@@ -209,9 +366,19 @@ void bullet() {
     text("Player 2 (Blue) Health: " + enH, 350, 100);
   }
 }
+void keyPressed() {
+  if (!keys.contains(key)) {
+    keys.add(key);
+  }
+  if (key == 'o') {
+    opmode = true;
+    intutorial = false;
+  }
+  if (key == 't') {
+    tpmode = true;
+    intutorial = false;
+  }
+}
 void keyReleased() {
   keys.remove((Character)key);
-}
-void mousePressed() {
-  intutorial = false;
 }
