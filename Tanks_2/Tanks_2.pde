@@ -170,31 +170,7 @@ void enCPU() {
     if (enY<enGY) {
       enY = enY + 10;
     }
-    float disLeft = enX-enGX;
-    if(disLeft<10){
-      enX-=disLeft;
-    } else {
-      enX-=10;
-    }
-    float disRight = enGX-enX;
-    if(disRight<10){
-      enX+=disRight;
-    } else {
-      enX+=10;
-    }
-    float disUp = enY-enGY;
-    if(disUp<10){
-      enY-=disUp;
-    } else {
-      enY-=10;
-    }
-    float disDown = enY-enGY;
-    if(disDown<10){
-      enY+=disDown;
-    } else {
-      enY+=10;
-    }
-    if (enX == enGX && enY == enGY) {
+    if (enX <= enGX+50 && enY <= enGY+50 && enX >= enGX-50 && enY >= enGY-50) {
       enGX = (int) random(0, width);
       enGY = (int) random(0, height);
     }
