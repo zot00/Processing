@@ -6,14 +6,21 @@ PImage field;
 int pX = 25;
 boolean intutorial = true;
 int pY = 25;
+float ptX = 25;
+float ptY = height - 25;
 float enX = 1895;
 float enY = 1055;
 int pH = 500;
 int enH = 500;
+float enb1X = enX;
+float enb2X = enX;
+float enb1Y = enY;
+float enb2Y = enY;
 int enGX = (int) random(0, width);
 int enGY = (int) random(0, height);
 int bX = pX;
 int bY = pY;
+boolean teammode = false;
 float btX = enX;
 float btY = enY;
 int h = (int) random(0, 10);
@@ -68,7 +75,7 @@ void draw() {
     fill(0);
     text("Yellow tank moves with WASD. Blue tank moves with IJKL.", 40, 240);
     text("Your and your enemy's bullets fire automatically.", 40, 270);
-    text("That is all. Type o for one player, and t for two players.", 40, 360);
+    text("That is all. Type o for one player, t for two players, and b for working together.", 40, 360);
   }
   if (intutorial == false && tpmode == true) {
     background(field);
@@ -81,6 +88,12 @@ void draw() {
     enCPU();
     playerMovement();
     opbullet();
+  }
+  if (intutorial == false && teammode == true) {
+    background(field);
+    playerMovement();
+    player2Movement();
+    teamenCPU();
   }
 }
 void enemyMovement() {
@@ -107,6 +120,33 @@ void enemyMovement() {
     if (enX<0||enY <0) {
       enX = width-25;
       enY = height-25;
+    }
+  }
+}
+void player2Movement() {
+  fill(0, 255, 255);
+  ellipse(ptX, ptY, 50, 50);
+  //println("p");
+  for (Character i : keys) {
+    if (i == 'j') {
+      ptX = ptX - 10;
+    }
+    if (i == 'l') {
+      ptX = ptX + 10;
+    }
+    if (i == 'k') {
+      ptY = ptY + 10;
+    }
+    if (i == 'i') {
+      ptY = ptY - 10;
+    }
+    if (ptX>width || ptY>height) {
+      ptX = 25;
+      ptY = height-25;
+    }
+    if (ptX<0||ptY <0) {
+      ptX = 25;
+      ptY = height-25;
     }
   }
 }
@@ -156,8 +196,96 @@ void enCPU() {
     }
   }
   if (enH<=250) {
-    println("engx: " + enGX + "; engy: " + enGY);
-    println("enx: " + enX + "; eny: " + enY);
+    if (enX>enGX) {
+      enX = enX - 10;
+    }
+    if (enY>enGY) {
+      enY = enY - 10;
+    }
+    if (enX<enGX) {
+      enX = enX + 10;
+    }
+    if (enY<enGY) {
+      enY = enY + 10;
+    }
+    if (enX <= enGX+50 && enY <= enGY+50 && enX >= enGX-50 && enY >= enGY-50) {
+      enGX = (int) random(0, width);
+      enGY = (int) random(0, height);
+    }
+  }
+}
+void teamenbullet() {
+  h = (int) random(0, 10);
+  p = (int) random(0, 10);
+  int bs = 15;
+  if (pX>enb1X) {
+    enb1X=enb1X+bs;
+  }
+  if (pX<enb1X) {
+    enb1X=enb1X-bs;
+  }
+  if (pY>enb1Y) {
+    enb1Y=enb1Y+bs;
+  }
+  if (pY<enb1Y) {
+    enb1Y=enb1Y-bs;
+  }
+  if (ptX>enb2X) {
+    enb2X=enb2X+bs;
+  }
+  if (ptX<enb2X) {
+    enb2X=enb2X-bs;
+  }
+  if (ptY>enb2X) {
+    enb2Y=enb2Y+bs;
+  }
+  if (ptY<enb2Y) {
+    enb2Y=enb2Y-bs;
+  }
+  if (enb1X <= pX+25&&enb1Y <= pY+25&&enb1X>=pX-25&&enb1Y>=pY-25) {
+    pH = pH-p;
+    bX = enX;
+    bY = enY;
+  }
+  if (enb2X <= ptX+25&&enb2Y <= ptY+25&&enb2X>=enb2X-25&&btY>=enb2Y-25) {
+    pH = pH-h;
+    btX = enX;
+    btY = enY;
+  }
+  fill(random(0, 255), random(0, 255), random(0, 255));
+  ellipse(bX, bY, 10, 10);
+  ellipse(btX, btY, 10, 10);
+  fill(random(0, 255), random(0, 255), random(0, 255));
+  text("Player 1 (Yellow) Health: " + pH, 150, 100);
+  text("Player 2 (Blue) Health: " + enH, 350, 100);
+}
+
+void teamenCPU() {
+  fill(0, 255, 255);
+  ellipse(enX, enY, 50, 50);
+  if (enH>500) {
+    if (dist(enX, enY, pX, pY)>=dist(enX, enY, ptX, ptY)) {
+      enGX=pX;
+      enGY=pY;
+    }
+    if (dist(enX, enY, ptX, ptY)>dist(enX, enY, pX, pY)) {
+      enGX=pX;
+      enGY=pY;
+    }
+    if (enX>enGX) {
+      enX = enX - 10;
+    }
+    if (enY>enGY) {
+      enY = enY - 10;
+    }
+    if (enX<enGX) {
+      enX = enX + 10;
+    }
+    if (enY<enGY) {
+      enY = enY + 10;
+    }
+  }
+  if (enH<=500) {
     if (enX>enGX) {
       enX = enX - 10;
     }
@@ -353,6 +481,11 @@ void keyPressed() {
   if (key == 't') {
     tpmode = true;
     intutorial = false;
+  }
+  if (key == 'b') {
+    teammode = true;
+    intutorial = false;
+    enH=1000;
   }
 }
 void keyReleased() {
