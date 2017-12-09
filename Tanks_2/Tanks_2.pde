@@ -6,12 +6,12 @@ PImage field;
 int pX = 25;
 boolean intutorial = true;
 int pY = 25;
-int ptH = 500;
+int p2H = 500;
 float ptX = 25;
 float ptY = height - 25;
 float enX = 1895;
 float enY = 1055;
-int pH = 500;
+int p1H = 500;
 int enH = 500;
 float enb1X = enX;
 float enb2X = enX;
@@ -24,6 +24,8 @@ float bY = pY;
 boolean teammode = false;
 float btX = enX;
 float btY = enY;
+float bthX = ptX;
+float bthY = ptY;
 int h = (int) random(0, 10);
 int p = (int) random(0, 10);
 boolean opmode = false;
@@ -32,8 +34,11 @@ ArrayList<Character> specialKeys = new ArrayList<Character>();
 ArrayList<Character> keys = new ArrayList<Character>();
 void setup() {
   fullScreen();
+  ptX=25;
+  ptY=height-25;
   minim = new Minim(this);
   int r = (int) random(0, 4);
+  println(height-25);
   if (r == 0) {
     //Zinnia's song
     player = minim.loadFile("fight.mp3", 1024);
@@ -86,16 +91,16 @@ void draw() {
   }
   if (intutorial == false && opmode == true) {
     background(field);
+    opbullet();
     enCPU();
     playerMovement();
-    opbullet();
   }
   if (intutorial == false && teammode == true) {
     background(field);
-    playerMovement();
-    player2Movement();
     teambullet();
     teamenbullet();
+    playerMovement();
+    player2Movement();
     teamenCPU();
   }
 }
@@ -128,8 +133,6 @@ void enemyMovement() {
 }
 void player2Movement() {
   fill(0, 255, 255);
-  ellipse(ptX, ptY, 50, 50);
-  //println("p");
   for (Character i : keys) {
     if (i == 'j') {
       ptX = ptX - 10;
@@ -246,27 +249,28 @@ void teamenbullet() {
     enb2Y=enb2Y-bs;
   }
   if (enb1X <= pX+25&&enb1Y <= pY+25&&enb1X>=pX-25&&enb1Y>=pY-25) {
-    pH = pH-p;
+    p1H = p1H-p;
     enb1X = enX;
     enb1Y = enY;
   }
   if (enb2X <= ptX+25&&enb2Y <= ptY+25&&enb2X>=enb2X-25&&btY>=enb2Y-25) {
-    pH = pH-h;
+    p2H = p2H-h;
     enb2X = enX;
     enb2Y = enY;
   }
   fill(255, 0, 0);
   ellipse(enb1X, enb1Y, 10, 10);
   ellipse(enb2X, enb2Y, 10, 10);
-  fill(random(0, 255), random(0, 255), random(0, 255));
-  text("Player 1 (Yellow) Health: " + pH, 150, 100);
-  text("Player 2 (Blue) Health: " + enH, 350, 100);
+  fill(255);
+  text("Player 1 (Yellow) Health: " + p1H, 150, 100);
+  text("Player 2 (Blue) Health: " + p2H, 350, 100);
+  text("Enemy (Red) Health: " + enH, 550, 100);
 }
 
 void teamenCPU() {
   fill(255, 0, 0);
   ellipse(enX, enY, 50, 50);
-  if (enH>500) {
+  if (enH>250) {
     if (dist(enX, enY, pX, pY)>=dist(enX, enY, ptX, ptY)) {
       enGX= (int) ptX;
       enGY= (int) ptY;
@@ -275,30 +279,30 @@ void teamenCPU() {
       enGY=pY;
     }
     if (enX>enGX) {
-      enX = enX - 5;
+      enX = enX - 15;
     }
     if (enY>enGY) {
-      enY = enY - 5;
+      enY = enY - 15;
     }
     if (enX<enGX) {
-      enX = enX + 5;
+      enX = enX + 15;
     }
     if (enY<enGY) {
-      enY = enY + 5;
+      enY = enY + 15;
     }
   }
-  if (enH<=500) {
+  if (enH<=250) {
     if (enX>enGX) {
-      enX = enX - 5;
+      enX = enX - 15;
     }
     if (enY>enGY) {
-      enY = enY - 5;
+      enY = enY - 15;
     }
     if (enX<enGX) {
-      enX = enX + 5;
+      enX = enX + 15;
     }
     if (enY<enGY) {
-      enY = enY + 5;
+      enY = enY + 15;
     }
     if (enX <= enGX+50 && enY <= enGY+50 && enX >= enGX-50 && enY >= enGY-50) {
       enGX = (int) random(0, width);
@@ -307,49 +311,49 @@ void teamenCPU() {
   }
 }
 void teambullet() {
-  if (enH<=0) {
-    if (enH <= 0) {
-      p = 0;
-      h = 0;
-      enH = 0;
-      fill(random(0, 255), random(0, 255), random(0, 255));
-      text("The players win!", 150, 200);
-      enb2Y = enY;
-      enb2X = enX;
-      enb1X=enX;
-      enb1Y=enY;
-      bX = pX;
-      bY = pY;
-      btX = ptX;
-      btY=ptY;
-      p = 0;
-      h = 0;
-      fill(random(0, 255), random(0, 255), random(0, 255));
-      ellipse(bX, bY, 10, 10);
-      ellipse(btX, btY, 10, 10);
-      text("Player 1 (Yellow) Health: " + pH, 150, 100);
-      text("Player 2 (Blue) Health: " + ptH, 350, 100);
-      text("Enemy (Red) Health: " + enH, 550, 100);
-    }
-    if (pH <= 0 || ptH <= 0) {
-      p = 0;
-      h = 0;
-      pH = 0;
-      fill(random(0, 255), random(0, 255), random(0, 255));
-      text("The enemy (Red) wins!", 350, 200);
-      btY = enY;
-      btX = enX;
-      bX = pX;
-      bY = pY;
-      fill(random(0, 255), random(0, 255), random(0, 255));
-      ellipse(bX, bY, 10, 10);
-      ellipse(btX, btY, 10, 10);
-      text("Player 1 (Yellow) Health: " + pH, 150, 100);
-      text("Player 2 (Blue) Health: " + ptH, 350, 100);
-      text("Enemy (Red) Health: " + enH, 550, 100);
-    }
-  }
-  if (enH!=0||pH!=0 || ptH!=0) {
+  if (enH <= 0) {
+    p = 0;
+    h = 0;
+    enH = 0;
+    fill(255);
+    text("The players win!", 150, 200);
+    enb2Y = enY;
+    enb2X = enX;
+    enb1X=enX;
+    enb1Y=enY;
+    bthX=ptX;
+    bthY=ptY;
+    bX = pX;
+    bY = pY;
+    btX = ptX;
+    btY=ptY;
+    p = 0;
+    h = 0;
+    fill(255);
+    ellipse(bX, bY, 10, 10);
+    ellipse(btX, btY, 10, 10);
+    text("Player 1 (Yellow) Health: " + p1H, 150, 100);
+    text("Player 2 (Blue) Health: " + p2H, 350, 100);
+    text("Enemy (Red) Health: " + enH, 550, 100);
+  } else if (p1H <= 0 || p2H <= 0) {
+    p = 0;
+    h = 0;
+    p1H = 0;
+    fill(255);
+    text("The enemy (Red) wins!", 350, 200);
+    btY = enY;
+    btX = enX;
+    bX = pX;
+    bY = pY;
+    bthX=ptX;
+    bthY=ptY;
+    fill(255);
+    ellipse(bX, bY, 10, 10);
+    ellipse(btX, btY, 10, 10);
+    text("Player 1 (Yellow) Health: " + p1H, 150, 100);
+    text("Player 2 (Blue) Health: " + p2H, 350, 100);
+    text("Enemy (Red) Health: " + enH, 550, 100);
+  } else if (enH!=0||p1H!=0 || p2H!=0) {
     h = (int) random(0, 10);
     p = (int) random(0, 10);
     int bs = 15;
@@ -365,6 +369,18 @@ void teambullet() {
     if (enY<bY) {
       bY=bY-bs;
     }
+    if (enX>bthX) {
+      bthX=bX+bs;
+    }
+    if (enX<bthX) {
+      bthX=bthX-bs;
+    }
+    if (enY>bthY) {
+      bthY=bthY+bs;
+    }
+    if (enY<bthY) {
+      bthY=bthY-bs;
+    }
     if (pX>btX) {
       btX=btX+bs;
     }
@@ -377,32 +393,38 @@ void teambullet() {
     if (pY<btY) {
       btY=btY-bs;
     }
-    if (bX <= enX+25&&bY <= enY+50&&bX>=enX-25&&bY>=enY-25) {
+    if (bX <= enX+25&&bY <= enY+25&&bX>=enX-25&&bY>=enY-25) {
       enH = enH-p;
       bX = pX;
       bY = pY;
     }
     if (btX <= pX+25&&btY <= pY+25&&btX>=pX-25&&btY>=pY-25) {
-      pH = pH-h;
+      p1H = p1H-h;
       btX = enX;
       btY = enY;
     }
-    fill(random(0, 255), random(0, 255), random(0, 255));
+    if (bthX <= enX+25&&bthY <= enY+25&&bthX>=enX-25&&bthY>=enY-25) {
+      enH = enH-p;
+      bthX = ptX;
+      bthY = ptY;
+    }
+    fill(255);
     ellipse(bX, bY, 10, 10);
     ellipse(btX, btY, 10, 10);
-    fill(random(0, 255), random(0, 255), random(0, 255));
-    text("Player 1 (Yellow) Health: " + pH, 150, 100);
-    text("Player 2 (Blue) Health: " + ptH, 350, 100);
+    ellipse(bthX, bthY, 10, 10);
+    fill(255);
+    text("Player 1 (Yellow) Health: " + p1H, 150, 100);
+    text("Player 2 (Blue) Health: " + p2H, 350, 100);
     text("Enemy (Red) Health: " + enH, 550, 100);
   }
 }
 void opbullet() {
-  if (enH<=0||pH <=0) {
+  if (enH<=0||p1H <=0) {
     if (enH <= 0) {
       p = 0;
       h = 0;
       enH = 0;
-      fill(random(0, 255), random(0, 255), random(0, 255));
+      fill(255);
       text("The player (Yellow) wins!", 150, 200);
       btY = enY;
       btX = enX;
@@ -410,30 +432,30 @@ void opbullet() {
       bY = pY;
       p = 0;
       h = 0;
-      fill(random(0, 255), random(0, 255), random(0, 255));
+      fill(255);
       ellipse(bX, bY, 10, 10);
       ellipse(btX, btY, 10, 10);
-      text("Player's (Yellow) Health: " + pH, 150, 100);
+      text("Player's (Yellow) Health: " + p1H, 150, 100);
       text("Enemy's (Red) Health: " + enH, 350, 100);
     }
-    if (pH <= 0) {
+    if (p1H <= 0) {
       p = 0;
       h = 0;
-      pH = 0;
-      fill(random(0, 255), random(0, 255), random(0, 255));
+      p1H = 0;
+      fill(255);
       text("The enemy (Red) wins!", 350, 200);
       btY = enY;
       btX = enX;
       bX = pX;
       bY = pY;
-      fill(random(0, 255), random(0, 255), random(0, 255));
+      fill(255);
       ellipse(bX, bY, 10, 10);
       ellipse(btX, btY, 10, 10);
-      text("Player's (Yellow) Health: " + pH, 150, 100);
+      text("Player's (Yellow) Health: " + p1H, 150, 100);
       text("Enemy's (Red) Health: " + enH, 350, 100);
     }
   }
-  if (enH!=0||pH!=0) {
+  if (enH!=0||p1H!=0) {
     h = (int) random(0, 10);
     p = (int) random(0, 10);
     int bs = 15;
@@ -467,25 +489,33 @@ void opbullet() {
       bY = pY;
     }
     if (btX <= pX+25&&btY <= pY+25&&btX>=pX-25&&btY>=pY-25) {
-      pH = pH-h;
+      p1H = p1H-h;
       btX = enX;
+ 
+      
+      
+      
+      
+      
+      
+      
       btY = enY;
     }
-    fill(random(0, 255), random(0, 255), random(0, 255));
+    fill(255);
     ellipse(bX, bY, 10, 10);
     ellipse(btX, btY, 10, 10);
-    fill(random(0, 255), random(0, 255), random(0, 255));
-    text("Player's (Yellow) Health: " + pH, 150, 100);
+    fill(255);
+    text("Player's (Yellow) Health: " + p1H, 150, 100);
     text("Enemy's (Red) Health: " + enH, 350, 100);
   }
 }
 void bullet() {
-  if (enH<=0||pH <=0) {
+  if (enH<=0||p1H <=0) {
     if (enH <= 0) {
       p = 0;
       h = 0;
       enH = 0;
-      fill(random(0, 255), random(0, 255), random(0, 255));
+      fill(255);
       text("Player 1 (Yellow) wins!", 150, 200);
       btY = enY;
       btX = enX;
@@ -493,30 +523,36 @@ void bullet() {
       bY = pY;
       p = 0;
       h = 0;
-      fill(random(0, 255), random(0, 255), random(0, 255));
+      /*if (bthX <= enX+25&&bthY <= enY+50&&bthX>=enX-25&&bthY>=enY-25) {
+       enH = enH-p;
+       bX = ptX;
+       bY = ptY;
+       }
+       */
+      fill(255);
       ellipse(bX, bY, 10, 10);
       ellipse(btX, btY, 10, 10);
-      text("Player 1 (Yellow) Health: " + pH, 150, 100);
+      text("Player 1 (Yellow) Health: " + p1H, 150, 100);
       text("Player 2 (Blue) Health: " + enH, 350, 100);
     }
-    if (pH <= 0) {
+    if (p1H <= 0) {
       p = 0;
       h = 0;
-      pH = 0;
-      fill(random(0, 255), random(0, 255), random(0, 255));
+      p1H = 0;
+      fill(255);
       text("Player 2 (Blue) wins!", 350, 200);
       btY = enY;
       btX = enX;
       bX = pX;
       bY = pY;
-      fill(random(0, 255), random(0, 255), random(0, 255));
+      fill(255);
       ellipse(bX, bY, 10, 10);
       ellipse(btX, btY, 10, 10);
-      text("Player 1 (Yellow) Health: " + pH, 150, 100);
+      text("Player 1 (Yellow) Health: " + p1H, 150, 100);
       text("Player 2 (Blue) Health: " + enH, 350, 100);
     }
   }
-  if (enH!=0||pH!=0) {
+  if (enH!=0||p1H!=0) {
     h = (int) random(0, 10);
     p = (int) random(0, 10);
     int bs = 15;
@@ -550,15 +586,15 @@ void bullet() {
       bY = pY;
     }
     if (btX <= pX+25&&btY <= pY+25&&btX>=pX-25&&btY>=pY-25) {
-      pH = pH-h;
+      p1H = p1H-h;
       btX = enX;
       btY = enY;
     }
-    fill(random(0, 255), random(0, 255), random(0, 255));
+    fill(255);
     ellipse(bX, bY, 10, 10);
     ellipse(btX, btY, 10, 10);
-    fill(random(0, 255), random(0, 255), random(0, 255));
-    text("Player 1 (Yellow) Health: " + pH, 150, 100);
+    fill(255);
+    text("Player 1 (Yellow) Health: " + p1H, 150, 100);
     text("Player 2 (Blue) Health: " + enH, 350, 100);
   }
 }
@@ -577,7 +613,7 @@ void keyPressed() {
   if (key == 'b') {
     teammode = true;
     intutorial = false;
-    enH=1000;
+    enH=500;
   }
 }
 void keyReleased() {
