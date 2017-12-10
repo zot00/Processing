@@ -71,7 +71,7 @@
  17. Check when a car hits your frog. You can use the following intersection method to help. 
  
  boolean intersects(Car car) {
- if ((frogY > car.getY() && frogY < car.getY()+50) && (frogX > car.getX() && frogX < car.getX()+car.getSize()))
+ if ((fy > car.getY() && fy < car.getY()+50) && (fx > car.getX() && fx < car.getX()+car.getSize()))
  return true;
  else 
  return false;
@@ -84,12 +84,12 @@
  textSize(size); 
  
  */
- int meh = (int) random(1,2);
- int hem = (int) random(1,2);
- int l = (int) random(1,10);
- int d = (int) random(1, 10);
- int h = (int) random(1, 10);
- int c = (int) random(1,2);
+int meh = (int) random(1, 200);
+int hem = (int) random(1, 200);
+int l = (int) random(1, 50);
+int d = (int) random(1, 50);
+int h = (int) random(1, 50);
+int c = (int) random(1, 200);
 PImage frog;
 int fx = 175;
 int fy = 350;
@@ -101,72 +101,83 @@ Car c2;
 Car c3;
 void setup() {
   //hermit.png
- if(c==1){
- c1 = new Car(400,100,l,100);
- }
- if(c==2){
-   c1 = new Car(0,100,l,100);
- }
- if(meh==1){
-   c2 = new Car(400, 200, d, 100);
- }
- if(meh==2){
-   c2 = new Car(0, 200, d, 100);
- }
- if(hem==1){
-   c3 = new Car(400, 300, h, 100);
- }
- if(hem==2){
-   c3 = new Car(0, 300, h, 100);
- }
+  if (c%2==0) {
+    c1 = new Car(400, 100, l, 100);
+  } else if (c%2==1) {
+    c1 = new Car(0, 100, l, 100);
+  }
+  if (meh%2==0) {
+    c2 = new Car(400, 200, d, 100);
+  } else if (meh%2==1) {
+    c2 = new Car(0, 200, d, 100);
+  }
+  if (hem%2==0) {
+    c3 = new Car(400, 300, h, 100);
+  } else if (hem%2==1) {
+    c3 = new Car(0, 300, h, 100);
+  }
   frog = loadImage("hermit.png");
-  frog.resize(50, 50);
+  frog.resize(25, 25);
   size(400, 400);
 }
 void draw() {
+  intersects(c1);
+  intersects(c2);
+  intersects(c3);
+  println(meh + " " + hem + " " + c);
   background(r, g, b);
   image(frog, fx, fy);
   if (fx>width||fx<0||fy>height||fy<0) {
     fx=175;
     fy=350;
   }
-  c1.display();
-  if(c==1){
-  c1.moveLeft();
+  if (c%2==0) {
+    c1.display();
+    c1.moveLeft();
+  } else if (c%2==1) {
+    c1.display();
+    c1.moveRight();
   }
-  if(c==2){
-   c1.moveRight(); 
+  if (meh%2==0) {
+    c2.display();
+    c2.moveLeft();
+  } else if (meh%2==1) {
+    c2.display();
+    c2.moveRight();
   }
-  c2.display();
-  if(meh==1){
-  c2.moveLeft();
-  }
-  if(meh==2){
-   c2.moveRight(); 
-  }
-  c3.display();
-  if(hem==1){
-  c3.moveLeft();
-  }
-  if(hem==2){
-   c3.moveRight(); 
+  if (hem%2==0) {
+    c3.display();
+    c3.moveLeft();
+  } else if (hem%2==1) {
+    c3.display();
+    c3.moveRight();
   }
 }
+boolean intersects(Car car) {
+    if ((fy > car.getY() && fy < car.getY()+50) && (fx > car.getX() && fx < car.getX()+car.getSize())) {
+      frog = loadImage("bp.png");
+      frog.resize(25, 25);
+      println("RIP kermit the weird looking frog alien");
+      return true;
+    } else {
+      return false;
+    }
+  }
 void keyPressed()
 {
   if (key == CODED) {
     if (keyCode == UP)
     {
-      fy-=10;
+      fy-=50;
     } else if (keyCode == DOWN)
     {
-      fy+=10;
+      fy+=50;
     } else if (keyCode == RIGHT)
     {
-      fx+=10;
+      fx+=50;
     } else if (keyCode == LEFT)
     {
-      fx-=10;
+      fx-=50;
     }
   }
 }
@@ -175,26 +186,37 @@ class Car {
   int y;
   int speed;
   int size;
-  Car(int x, int y, int speed, int size){
+  Car(int x, int y, int speed, int size) {
     this.x=x;
     this.y=y;
     this.speed=speed;
     this.size=size;
   }
   void display() {
- fill(0,255,0);
- rect(x , y,  size, 50);
- }
- void moveLeft(){
-   x-=speed;
-   if(x<-size){
-   x=400;
- }
- }
- void moveRight(){
-   x+=speed;
-   if(x>size+width){
-   x=0;
- }
- }
+    fill(0, 255, 0);
+    rect(x, y, size, 50);
+  }
+  void moveLeft() {
+    speed=(int) random(1, 30);
+    x-=speed;
+    if (x<-size) {
+      x=400;
+    }
+  }
+  void moveRight() {
+    speed=(int) random(1, 30);
+    x+=speed;
+    if (x>size+width) {
+      x=0;
+    }
+  }
+  int getY() {
+    return y;
+  }
+  int getX() {
+    return x;
+  }
+  int getSize() {
+    return size;
+  }
 }
