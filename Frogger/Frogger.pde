@@ -17,20 +17,20 @@
  
  void keyPressed()
  {
- if(key == CODED){
- if(keyCode == UP)
+ if(key == cODED){
+ if(keycode == UP)
  {
  //Frog Y position goes up
  }
- else if(keyCode == DOWN)
+ else if(keycode == DOWN)
  {
  //Frog Y position goes down 
  }
- else if(keyCode == RIGHT)
+ else if(keycode == RIGHT)
  {
  //Frog X position goes right
  }
- else if(keyCode == LEFT)
+ else if(keycode == LEFT)
  {
  //Frog X position goes left
  }
@@ -39,21 +39,21 @@
  
  5. Write a method to keep our frog from going outside of the canvas
  
- 6. Create a Car class inside your sketch. 
- //Your Car class will include the car’s position at x, position at y, the size of the car, and the speed of the car.
- 7. Create a constructor inside your Car class that initializes each variable with parameters.
+ 6. create a car class inside your sketch. 
+ //Your car class will include the car’s position at x, position at y, the size of the car, and the speed of the car.
+ 7. create a constructor inside your car class that initializes each variable with parameters.
  
  
- 8. Copy this functionality in your Car class to display your car position 
+ 8. copy this functionality in your car class to display your car position 
  void display() 
  {
  fill(0,255,0);
- rect(Position of X , Position of Y,  Size of your Car, 50);
+ rect(Position of X , Position of Y,  Size of your car, 50);
  }
  
- 9. Create several new Car objects at the top of your sketch.
+ 9. create several new car objects at the top of your sketch.
  
- 10. Call the display() method in your draw method for each car. You should see your car appear.
+ 10. call the display() method in your draw method for each car. You should see your car appear.
  
  11.  Inside your car class write a method for the car to move to the left with its speed. 
  
@@ -66,65 +66,78 @@
  15. In the draw() method, alternate the driving direction of each of your cars to either go left or right. Use the display() method after every drive method. 
  
  
- }16. Create a getX(), getY(), and getSize() method in your Car class.
+ }16. create a getX(), getY(), and getSize() method in your car class.
  
- 17. Check when a car hits your frog. You can use the following intersection method to help. 
+ 17. check when a car hits your frog. You can use the following intersection method to help. 
  
- boolean intersects(Car car) {
+ boolean intersects(car car) {
  if ((fy > car.getY() && fy < car.getY()+50) && (fx > car.getX() && fx < car.getX()+car.getSize()))
  return true;
  else 
  return false;
- 18. Call the intersects method for one of your cars in your draw method.  If the intersects method returns true, return your frog to the starting point. 
+ 18. call the intersects method for one of your cars in your draw method.  If the intersects method returns true, return your frog to the starting point. 
  
  19. Repeat step 18 for all of your cars.
  
- 20. Create a winner banner once you get to the other side 
+ 20. create a winner banner once you get to the other side 
  text( string message, x, y); 
  textSize(size); 
  
  */
-int meh = (int) random(1, 200);
-int hem = (int) random(1, 200);
-int l = (int) random(1, 50);
-int d = (int) random(1, 50);
-int h = (int) random(1, 50);
-int c = (int) random(1, 200);
+int rand1 = (int) random(1, 100);
+int rand2 = (int) random(1, 100);
+int l = (int) random(1, 26);
+int d = (int) random(1, 26);
+int h = (int) random(1, 26);
+int c = (int) random(1, 200);//c=rand3
 PImage frog;
 int fx = 175;
 int fy = 350;
 int r = (int) random(0, 255);
 int g = (int) random(0, 255);
 int b = (int) random(0, 255);
-Car c1;
-Car c2;
-Car c3;
+car c1;
+car c2;
+car c3;
 void setup() {
   //hermit.png
   if (c%2==0) {
-    c1 = new Car(400, 100, l, 100);
+    c1 = new car(400, 100, l, 100);
   } else if (c%2==1) {
-    c1 = new Car(0, 100, l, 100);
+    c1 = new car(0, 100, l, 100);
   }
-  if (meh%2==0) {
-    c2 = new Car(400, 200, d, 100);
-  } else if (meh%2==1) {
-    c2 = new Car(0, 200, d, 100);
+  if (rand1%2==0) {
+    c2 = new car(400, 200, d, 100);
+  } else if (rand1%2==1) {
+    c2 = new car(0, 200, d, 100);
   }
-  if (hem%2==0) {
-    c3 = new Car(400, 300, h, 100);
-  } else if (hem%2==1) {
-    c3 = new Car(0, 300, h, 100);
+  if (rand2%2==0) {
+    c3 = new car(400, 300, h, 100);
+  } else if (rand2%2==1) {
+    c3 = new car(0, 300, h, 100);
   }
   frog = loadImage("hermit.png");
   frog.resize(25, 25);
   size(400, 400);
 }
 void draw() {
-  intersects(c1);
-  intersects(c2);
-  intersects(c3);
-  println(meh + " " + hem + " " + c);
+  size(400, 400);
+  if (intersects(c1)==true) {
+    frog = loadImage("bp.png");
+    frog.resize(25, 25);
+    println("RIP jabbmit the weird looking frog alien");
+  }
+  if (intersects(c2)==true) {
+    frog = loadImage("bp.png");
+    frog.resize(25, 25);
+    println("RIP jabbmit the weird looking frog alien");
+  }
+  if (intersects(c3)==true) {
+    frog = loadImage("bp.png");
+    frog.resize(25, 25);
+    println("RIP jabbmit the weird looking frog alien");
+  }
+  //println(rand1 + " " + rand2 + " " + c);
   background(r, g, b);
   image(frog, fx, fy);
   if (fx>width||fx<0||fy>height||fy<0) {
@@ -138,31 +151,28 @@ void draw() {
     c1.display();
     c1.moveRight();
   }
-  if (meh%2==0) {
+  if (rand1%2==0) {
     c2.display();
     c2.moveLeft();
-  } else if (meh%2==1) {
+  } else if (rand1%2==1) {
     c2.display();
     c2.moveRight();
   }
-  if (hem%2==0) {
+  if (rand2%2==0) {
     c3.display();
     c3.moveLeft();
-  } else if (hem%2==1) {
+  } else if (rand2%2==1) {
     c3.display();
     c3.moveRight();
   }
 }
-boolean intersects(Car car) {
-    if ((fy > car.getY() && fy < car.getY()+50) && (fx > car.getX() && fx < car.getX()+car.getSize())) {
-      frog = loadImage("bp.png");
-      frog.resize(25, 25);
-      println("RIP kermit the weird looking frog alien");
-      return true;
-    } else {
-      return false;
-    }
+boolean intersects(car car) {
+  if ((fy > car.getY()-1 && fy < car.getY()+50) && (fx > car.getX() && fx < car.getX()+car.getSize())) {
+    return true;
+  } else {
+    return false;
   }
+}
 void keyPressed()
 {
   if (key == CODED) {
@@ -181,12 +191,12 @@ void keyPressed()
     }
   }
 }
-class Car {
+class car {
   int x;
   int y;
   int speed;
   int size;
-  Car(int x, int y, int speed, int size) {
+  car(int x, int y, int speed, int size) {
     this.x=x;
     this.y=y;
     this.speed=speed;
