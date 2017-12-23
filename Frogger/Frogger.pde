@@ -86,15 +86,19 @@
  */
 int rand1 = (int) random(1, 100);
 int rand2 = (int) random(1, 100);
-int l = (int) random(1, 26);
-int d = (int) random(1, 26);
-int h = (int) random(1, 26);
+int l = (int) 1;
+int d = (int) 1;
+boolean hehehe = true;
+int h = (int) 1;
 int c = (int) random(1, 200);//c=rand3
 PImage frog;
+PImage banner;
 int fx = 175;
 int fy = 350;
+boolean dead = false;
 int r = (int) random(0, 255);
 int g = (int) random(0, 255);
+int points = 0;
 int b = (int) random(0, 255);
 car c1;
 car c2;
@@ -108,7 +112,7 @@ void setup() {
   }
   if (rand1%2==0) {
     c2 = new car(400, 200, d, 100);
-  } else if (rand1%2==1) {
+  } else if (rand1%2==1) { 
     c2 = new car(0, 200, d, 100);
   }
   if (rand2%2==0) {
@@ -126,23 +130,59 @@ void draw() {
     frog = loadImage("bp.png");
     frog.resize(25, 25);
     println("RIP jabbmit the weird looking frog alien");
+    dead = true;
   }
   if (intersects(c2)==true) {
     frog = loadImage("bp.png");
     frog.resize(25, 25);
     println("RIP jabbmit the weird looking frog alien");
+    dead = true;
   }
   if (intersects(c3)==true) {
     frog = loadImage("bp.png");
     frog.resize(25, 25);
     println("RIP jabbmit the weird looking frog alien");
+    dead = true;
   }
   //println(rand1 + " " + rand2 + " " + c);
   background(r, g, b);
   image(frog, fx, fy);
-  if (fx>width||fx<0||fy>height||fy<0) {
+  text("Points: " + points, 25, 25);
+  if (fx>width || fy>height || fx<0) {
     fx=175;
     fy=350;
+  }
+  if (fy<0 && dead == false) {
+    points = points+1;
+    if (fy<0) {
+      fx=175;
+      fy=350;
+    }
+  }
+  if (points == 10) {
+    banner = loadImage("win.png");
+    banner.resize(125, 50);
+    image(banner, width/3, 0);
+    if (fy<0) {
+      fx=175;
+      fy=350;
+    }
+  }
+  if (dead == true && fy>0 && fy!=350 && hehehe==true) {
+    hehehe=false;
+  }
+  if (fy>0 && hehehe == false) {
+    text("Welp, you died.", width/2.5, 25);
+    // fx=175;
+    //fy=350;
+  }
+  if (dead == true && fy<100) {
+    text("Wow... You tried to cheat... SOOO original, eh???", width/6, 25);
+    points = 0;
+    if (fy<0) {
+      fx=175;
+      fy=350;
+    }
   }
   if (c%2==0) {
     c1.display();
@@ -207,14 +247,14 @@ class car {
     rect(x, y, size, 50);
   }
   void moveLeft() {
-    speed=(int) random(1, 30);
+    speed=(int) random(1, 16);
     x-=speed;
     if (x<-size) {
       x=400;
     }
   }
   void moveRight() {
-    speed=(int) random(1, 30);
+    speed=(int) random(1, 16);
     x+=speed;
     if (x>size+width) {
       x=0;
