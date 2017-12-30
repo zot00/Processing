@@ -6,6 +6,7 @@ PImage field;
 int pX = 25;
 boolean intutorial = true;
 int pY = 25;
+boolean twoplayerenemy= false;
 int p2H = 500;
 float ptX = 25;
 float ptY = height - 25;
@@ -74,8 +75,8 @@ void draw() {
     text("You will need to destroy your enemy's tank and survive.", 40, 70);
     text("Your bullets can do any amount of damage from 0 to 10.", 40, 160);
     text("Your bullets track the enemy.", 40, 90);
-    text("A bad strategy is to chase your opponent.", 40, 110);
-    text("A good strategy is to use the walls to your advantage.", 40, 130);
+    text("A bad strategy is to chase your opponent. (You'll take an insane amount of damage)", 40, 110);
+    text("A good strategy is to use the walls to your advantage (I won't say how).", 40, 130);
     fill(255, 0, 0);
     text("Instructions:", 40, 210);
     fill(0);
@@ -98,10 +99,14 @@ void draw() {
   if (intutorial == false && teammode == true) {
     background(field);
     teambullet();
-    teamenbullet();
+    teamenbullet(); // <- Team enemy bullet
     playerMovement();
-    player2Movement();
+    player2Movement(); // Ya mix a fish, bird, and male cow, and you get a sport. Yeah...
     teamenCPU();
+    if(twoplayerenemy==false){
+      enH=1000;
+      twoplayerenemy=true;
+    }
   }
 }
 void enemyMovement() {
@@ -155,6 +160,7 @@ void player2Movement() {
       ptY = height-25;
     }
   }
+  ellipse(ptX, ptY, 50, 50);
 }
 void playerMovement() {
   fill(255, 255, 0);
@@ -268,6 +274,7 @@ void teamenbullet() {
 }
 
 void teamenCPU() {
+  int enSpeed = 5;
   fill(255, 0, 0);
   ellipse(enX, enY, 50, 50);
   if (enH>250) {
@@ -279,30 +286,30 @@ void teamenCPU() {
       enGY=pY;
     }
     if (enX>enGX) {
-      enX = enX - 15;
+      enX = enX - enSpeed;
     }
     if (enY>enGY) {
-      enY = enY - 15;
+      enY = enY - enSpeed;
     }
     if (enX<enGX) {
-      enX = enX + 15;
+      enX = enX + enSpeed;
     }
     if (enY<enGY) {
-      enY = enY + 15;
+      enY = enY + enSpeed;
     }
   }
   if (enH<=250) {
     if (enX>enGX) {
-      enX = enX - 15;
+      enX = enX - enSpeed;
     }
     if (enY>enGY) {
-      enY = enY - 15;
+      enY = enY - enSpeed;
     }
     if (enX<enGX) {
-      enX = enX + 15;
+      enX = enX + enSpeed;
     }
     if (enY<enGY) {
-      enY = enY + 15;
+      enY = enY + enSpeed;
     }
     if (enX <= enGX+50 && enY <= enGY+50 && enX >= enGX-50 && enY >= enGY-50) {
       enGX = (int) random(0, width);
@@ -356,7 +363,7 @@ void teambullet() {
   } else if (enH!=0||p1H!=0 || p2H!=0) {
     h = (int) random(0, 10);
     p = (int) random(0, 10);
-    int bs = 15;
+    int bs = 15;//<- Bullet Speed
     if (enX>bX) {
       bX=bX+bs;
     }
@@ -370,13 +377,13 @@ void teambullet() {
       bY=bY-bs;
     }
     if (enX>bthX) {
-      bthX=bX+bs;
+      bthX=bthX+bs; //<- Bullet 3's X value
     }
     if (enX<bthX) {
       bthX=bthX-bs;
     }
     if (enY>bthY) {
-      bthY=bthY+bs;
+      bthY=bthY+bs; //<- Bullet 3's Y value
     }
     if (enY<bthY) {
       bthY=bthY-bs;
@@ -491,14 +498,14 @@ void opbullet() {
     if (btX <= pX+25&&btY <= pY+25&&btX>=pX-25&&btY>=pY-25) {
       p1H = p1H-h;
       btX = enX;
- 
-      
-      
-      
-      
-      
-      
-      
+
+
+
+
+
+
+
+
       btY = enY;
     }
     fill(255);
