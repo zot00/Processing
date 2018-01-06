@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+//Academia Khan.
+//Eso malo, ¿eh?
 import ddf.minim.*;
 AudioPlayer player;
 Minim minim;
@@ -103,7 +105,7 @@ void draw() {
     playerMovement();
     player2Movement(); // Ya mix a fish, bird, and male cow, and you get a sport. Yeah...
     teamenCPU();
-    if(twoplayerenemy==false){
+    if (twoplayerenemy==false) {
       enH=1000;
       twoplayerenemy=true;
     }
@@ -229,7 +231,7 @@ void enCPU() {
 void teamenbullet() {
   h = (int) random(0, 10);
   p = (int) random(0, 10);
-  int bs = 15;
+  int bs = 5;
   if (pX>enb1X) {
     enb1X=enb1X+bs;
   }
@@ -277,7 +279,7 @@ void teamenCPU() {
   int enSpeed = 5;
   fill(255, 0, 0);
   ellipse(enX, enY, 50, 50);
-  if (enH>250) {
+  if (enH>500) {
     if (dist(enX, enY, pX, pY)>=dist(enX, enY, ptX, ptY)) {
       enGX= (int) ptX;
       enGY= (int) ptY;
@@ -298,7 +300,7 @@ void teamenCPU() {
       enY = enY + enSpeed;
     }
   }
-  if (enH<=250) {
+  if (enH<=500) {
     if (enX>enGX) {
       enX = enX - enSpeed;
     }
@@ -337,8 +339,8 @@ void teambullet() {
     p = 0;
     h = 0;
     fill(255);
-    ellipse(bX, bY, 10, 10);
-    ellipse(btX, btY, 10, 10);
+    //ellipse(bX, bY, 10, 10);
+    //ellipse(btX, btY, 10, 10);
     text("Player 1 (Yellow) Health: " + p1H, 150, 100);
     text("Player 2 (Blue) Health: " + p2H, 350, 100);
     text("Enemy (Red) Health: " + enH, 550, 100);
@@ -355,8 +357,8 @@ void teambullet() {
     bthX=ptX;
     bthY=ptY;
     fill(255);
-    ellipse(bX, bY, 10, 10);
-    ellipse(btX, btY, 10, 10);
+    // ellipse(bX, bY, 10, 10);
+    // ellipse(btX, btY, 10, 10);
     text("Player 1 (Yellow) Health: " + p1H, 150, 100);
     text("Player 2 (Blue) Health: " + p2H, 350, 100);
     text("Enemy (Red) Health: " + enH, 550, 100);
@@ -388,27 +390,10 @@ void teambullet() {
     if (enY<bthY) {
       bthY=bthY-bs;
     }
-    if (pX>btX) {
-      btX=btX+bs;
-    }
-    if (pX<btX) {
-      btX=btX-bs;
-    }
-    if (pY>btY) {
-      btY=btY+bs;
-    }
-    if (pY<btY) {
-      btY=btY-bs;
-    }
     if (bX <= enX+25&&bY <= enY+25&&bX>=enX-25&&bY>=enY-25) {
       enH = enH-p;
       bX = pX;
       bY = pY;
-    }
-    if (btX <= pX+25&&btY <= pY+25&&btX>=pX-25&&btY>=pY-25) {
-      p1H = p1H-h;
-      btX = enX;
-      btY = enY;
     }
     if (bthX <= enX+25&&bthY <= enY+25&&bthX>=enX-25&&bthY>=enY-25) {
       enH = enH-p;
@@ -417,7 +402,6 @@ void teambullet() {
     }
     fill(255);
     ellipse(bX, bY, 10, 10);
-    ellipse(btX, btY, 10, 10);
     ellipse(bthX, bthY, 10, 10);
     fill(255);
     text("Player 1 (Yellow) Health: " + p1H, 150, 100);
@@ -498,14 +482,6 @@ void opbullet() {
     if (btX <= pX+25&&btY <= pY+25&&btX>=pX-25&&btY>=pY-25) {
       p1H = p1H-h;
       btX = enX;
-
-
-
-
-
-
-
-
       btY = enY;
     }
     fill(255);
@@ -609,18 +585,20 @@ void keyPressed() {
   if (!keys.contains(key)) {
     keys.add(key);
   }
-  if (key == 'o') {
-    opmode = true;
-    intutorial = false;
-  }
-  if (key == 't') {
-    tpmode = true;
-    intutorial = false;
-  }
-  if (key == 'b') {
-    teammode = true;
-    intutorial = false;
-    enH=500;
+  if (intutorial==true) {
+    if (key == 'o') {
+      opmode = true;
+      intutorial = false;
+    }
+    if (key == 't') {
+      tpmode = true;
+      intutorial = false;
+    }
+    if (key == 'b') {
+      teammode = true;
+      intutorial = false;
+      enH=500;
+    }
   }
 }
 void keyReleased() {
