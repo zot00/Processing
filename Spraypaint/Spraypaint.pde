@@ -55,7 +55,7 @@ int random (int maxValue) {
   int y = (int) random(0, maxValue);
   return y;
 }
-float frequency = .001;
+float frequency = .005;
  float noiseInterval = PI; 
 void makeMagical() {
  fill( 0, 0, 0, 10 );
