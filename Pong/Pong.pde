@@ -42,13 +42,91 @@
  return false;
  }
  */
-int bX=width/2;
+import java.util.ArrayList;
+import ddf.minim.*;
+Minim minim;
+AudioSample sound;
+AudioSample l;
+AudioSample m;
+float bx=width/2;
+float by=height/2;
+float yspd = 5;
+float xspd = 5;
+int p1y = height/2;
+  int p2y = height/2;
+boolean t = true;
+ArrayList<Character> specialKeys = new ArrayList<Character>();
+ArrayList<Character> keys = new ArrayList<Character>();
 void setup() {
+  keys.add('k');
+  keys.add('i');
+  keys.add('w');
+  keys.add('s');
   fullScreen();
+  minim = new Minim (this);
+  m=minim.loadSample("Bong.wav", 128);
+  l=minim.loadSample("start.wav", 128);
+  sound = minim.loadSample("Dong.wav", 128);
+  l.trigger();
 }
 void draw() {
   background(25, 39, 45);
-  ellipse(bX, height/2, 25, 25);
+  ellipse(bx, by, 25, 25);
+  rect(0, p1y, 20, 100);
+  rect(width-21, p2y, 20, 100);
   fill(50, 0, 0);
   stroke(random(1, 255), random(1, 255), random(1, 255));
+  bx+=xspd;
+  by+=yspd;
+  if (bx-12.5<0) {
+    xspd=xspd*-1.05;
+    sound.trigger();
+  }
+  if (bx+12.5>width) {
+    xspd=xspd*-1.05;
+    sound.trigger();
+  }
+  if (by+12.5>height) {
+    yspd=yspd*-1.05;
+    sound.trigger();
+  }
+  if (by-12.5<0) {
+    yspd=yspd*-1.05;
+    sound.trigger();
+  }
+  if (yspd>=20) {
+    yspd=-19;
+  }
+  if (xspd>=20) {
+    xspd=-19;
+  }
+  if (yspd<=-20) {
+    yspd=19;
+  }
+  if (xspd<=-20) {
+    xspd=19;
+  }
+  }
+
+void keyPressed() {
+  if (!keys.contains(key)) {
+    keys.add(key);
+  }
+  for (Character i : keys) {
+  if (i == 'k') {
+      p2y = p2y + 10;
+    }
+    if (i == 'i') {
+      p2y = p2y - 10;
+    }
+    if (i == 's') {
+      p1y = p1y + 10;
+    }
+    if (i == 'w') {
+      p1y = p1y - 10;
+    }
+  }
+}
+void keyReleased() {
+  keys.remove((Character)key);
 }
