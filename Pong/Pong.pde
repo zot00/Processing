@@ -22,10 +22,10 @@
  //drop the sound file onto your sketch
  import ddf.minim.*;       //at the very top of your sketch
  Minim minim;        //at the top of your sketch
- AudioSample sound;      //at the top of your sketch
+ AudioPlayer sound;      //at the top of your sketch
  minim = new Minim (this);    //in the setup method
- sound = minim.loadSample("BD.mp3", 128);//in the setup method
- sound.trigger();        //in draw method (when the ball hits the bottom)
+ sound = minim.loadFile("BD.mp3", 128);//in the setup method
+ sound.play();        //in draw method (when the ball hits the bottom)
  8. Add a background image for your game.
  PImage backgroundImage;         //at the top of your sketch
  backgroundImage = loadImage("image.jpg");  //in the setup method
@@ -45,15 +45,16 @@
 import java.util.ArrayList;
 import ddf.minim.*;
 Minim minim;
-AudioSample sound;
-AudioSample l;
-AudioSample m;
+AudioPlayer sound;
+AudioPlayer l;
+AudioPlayer m;
+AudioPlayer themesong;
 float bx=width/2;
 float by=height/2;
 float yspd = 5;
 float xspd = 5;
 int p1y = height/2;
-  int p2y = height/2;
+int p2y = height/2;
 boolean t = true;
 ArrayList<Character> specialKeys = new ArrayList<Character>();
 ArrayList<Character> keys = new ArrayList<Character>();
@@ -64,14 +65,15 @@ void setup() {
   keys.add('s');
   fullScreen();
   minim = new Minim (this);
-  m=minim.loadSample("Bong.wav", 128);
-  l=minim.loadSample("start.wav", 128);
-  sound = minim.loadSample("Dong.wav", 128);
-  l.trigger();
+  themesong=minim.loadFile("Skywards.mp3", 128);
+  m=minim.loadFile("Bong.wav", 128);
+  sound = minim.loadFile("Dong.wav", 128);
+  themesong.loop();
 }
 void draw() {
   background(25, 39, 45);
   ellipse(bx, by, 25, 25);
+  playerMovement();
   rect(0, p1y, 20, 100);
   rect(width-21, p2y, 20, 100);
   fill(50, 0, 0);
@@ -80,19 +82,23 @@ void draw() {
   by+=yspd;
   if (bx-12.5<0) {
     xspd=xspd*-1.05;
-    sound.trigger();
+    sound.play();
+    sound.rewind();
   }
   if (bx+12.5>width) {
     xspd=xspd*-1.05;
-    sound.trigger();
+    sound.play();
+    sound.rewind();
   }
   if (by+12.5>height) {
     yspd=yspd*-1.05;
-    sound.trigger();
+    sound.play();
+    sound.rewind();
   }
   if (by-12.5<0) {
     yspd=yspd*-1.05;
-    sound.trigger();
+    sound.play();
+    sound.rewind();
   }
   if (yspd>=20) {
     yspd=-19;
@@ -106,17 +112,14 @@ void draw() {
   if (xspd<=-20) {
     xspd=19;
   }
-  }
-
-void keyPressed() {
-  if (!keys.contains(key)) {
-    keys.add(key);
-  }
+}
+// a b c d e f g h i j k l m n o p q r s t u v w x y z
+void playerMovement(){
   for (Character i : keys) {
-  if (i == 'k') {
+    if (i == 'k') {
       p2y = p2y + 10;
     }
-    if (i == 'i') {
+     if (i == 'i') {
       p2y = p2y - 10;
     }
     if (i == 's') {
@@ -125,6 +128,11 @@ void keyPressed() {
     if (i == 'w') {
       p1y = p1y - 10;
     }
+  }
+}
+void keyPressed() {
+  if (!keys.contains(key)) {
+    keys.add(key);
   }
 }
 void keyReleased() {
