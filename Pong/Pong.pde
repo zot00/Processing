@@ -116,17 +116,18 @@ void draw() {
 // a b c d e f g h i j k l m n o p q r s t u v w x y z
 void playerMovement() {
   for (Character i : keys) {
-    if (i == 'k') {
-      p2y = p2y - 10;
-    }
-    if (i == 'i') {
-      p2y = p2y + 10;
-    }
+    
     if (i == 's') {
+      p1y = p1y + 10;
+    }
+    else if (i == 'w') {
       p1y = p1y - 10;
     }
-    if (i == 'w') {
-      p1y = p1y + 10;
+    else if (i == 'k') {
+      p2y = p2y + 10;
+    }
+    else if (i == 'i') {
+      p2y = p2y - 10;
     }
   }
   if (p1y<=0) {
@@ -144,6 +145,7 @@ void playerMovement() {
 }
 void keyPressed() {
   if (!keys.contains(key)) {
+    print(key);
     keys.add(key);
   }
 }
