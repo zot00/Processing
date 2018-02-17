@@ -114,20 +114,32 @@ void draw() {
   }
 }
 // a b c d e f g h i j k l m n o p q r s t u v w x y z
-void playerMovement(){
+void playerMovement() {
   for (Character i : keys) {
     if (i == 'k') {
-      p2y = p2y + 10;
-    }
-     if (i == 'i') {
       p2y = p2y - 10;
     }
-    if (i == 's') {
-      p1y = p1y + 10;
+    if (i == 'i') {
+      p2y = p2y + 10;
     }
-    if (i == 'w') {
+    if (i == 's') {
       p1y = p1y - 10;
     }
+    if (i == 'w') {
+      p1y = p1y + 10;
+    }
+  }
+  if (p1y<=0) {
+    p1y=height/2;
+  }
+  if (p1y>=height) {
+    p1y=height/2;
+  }
+  if (p2y<=0) {
+    p1y=height/2;
+  }
+  if (p2y<=height) {
+    p1y=height/2;
   }
 }
 void keyPressed() {
