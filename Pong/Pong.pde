@@ -49,56 +49,72 @@ AudioPlayer sound;
 AudioPlayer l;
 AudioPlayer m;
 AudioPlayer themesong;
-float bx=width/2;
-float by=height/2;
+float bx;
+float by;
 float yspd = 5;
 float xspd = 5;
-int p1y = height/2;
-int p2y = height/2;
+int p1y;
+int p2y;
+int p1x;
+int p2x;
+float radius= 12.5;
 boolean t = true;
 ArrayList<Character> specialKeys = new ArrayList<Character>();
 ArrayList<Character> keys = new ArrayList<Character>();
 void setup() {
-  keys.add('k');
-  keys.add('i');
-  keys.add('w');
-  keys.add('s');
+  /*keys.add('k');
+   keys.add('i');
+   keys.add('w');
+   keys.add('s');*/
   fullScreen();
+  p1y=height/2;
+  p2y=height/2;
+  bx=width/2;
+  by=height/2;
+  p1x=1;
+  p2x=width-21;
   minim = new Minim (this);
   themesong=minim.loadFile("Skywards.mp3", 128);
   m=minim.loadFile("Bong.wav", 128);
   sound = minim.loadFile("Dong.wav", 128);
-  themesong.loop();
+  //themesong.loop();
 }
 void draw() {
   background(25, 39, 45);
   ellipse(bx, by, 25, 25);
   playerMovement();
-  rect(0, p1y, 20, 100);
-  rect(width-21, p2y, 20, 100);
+  rect(p1x, p1y, 20, 100);
+  rect(p2x, p2y, 20, 100);
   fill(50, 0, 0);
   stroke(random(1, 255), random(1, 255), random(1, 255));
   bx+=xspd;
   by+=yspd;
-  if (bx-12.5<0) {
-    xspd=xspd*-1.05;
-    sound.play();
-    sound.rewind();
+  if (by+radius<=(float)p2y+100&&by-radius>=(float)p2y&&bx+radius<=(float)p2x-10&&bx-radius>=(float)p2x+10) {
+    xspd=-xspd;
+    yspd=-1*yspd;
+  } else if (by+radius<=(float)p1y+100&&by-radius>=(float)p1y&&bx+radius<=(float)p1x-10&&bx-radius>=(float)p1x+10) { //p1y=paddle1y; bx=ballx
+    xspd=-1*xspd;
+    yspd=-1*yspd;
   }
-  if (bx+12.5>width) {
-    xspd=xspd*-1.05;
-    sound.play();
-    sound.rewind();
-  }
-  if (by+12.5>height) {
+  /*if (bx-radius<0) {
+   xspd=xspd*-1.05;
+   //sound.play();
+   //sound.rewind();
+   }*/
+  /*if (bx+radius>width) {
+   xspd=xspd*-1.05;
+   //sound.play();
+   //sound.rewind();
+   }*/
+  if (by+radius>height) {
     yspd=yspd*-1.05;
-    sound.play();
-    sound.rewind();
+    //sound.play();
+    //sound.rewind();
   }
-  if (by-12.5<0) {
+  if (by-radius<0) {
     yspd=yspd*-1.05;
-    sound.play();
-    sound.rewind();
+    //sound.play();
+    //sound.rewind();
   }
   if (yspd>=20) {
     yspd=-19;
@@ -116,31 +132,15 @@ void draw() {
 // a b c d e f g h i j k l m n o p q r s t u v w x y z
 void playerMovement() {
   for (Character i : keys) {
-    
     if (i == 's') {
       p1y = p1y + 10;
-    }
-    else if (i == 'w') {
+    } else if (i == 'w') {
       p1y = p1y - 10;
-    }
-    else if (i == 'k') {
+    } else if (i == 'k') {
       p2y = p2y + 10;
-    }
-    else if (i == 'i') {
+    } else if (i == 'i') {
       p2y = p2y - 10;
     }
-  }
-  if (p1y<=0) {
-    p1y=height/2;
-  }
-  if (p1y>=height) {
-    p1y=height/2;
-  }
-  if (p2y<=0) {
-    p1y=height/2;
-  }
-  if (p2y<=height) {
-    p1y=height/2;
   }
 }
 void keyPressed() {
