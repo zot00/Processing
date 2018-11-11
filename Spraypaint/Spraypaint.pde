@@ -38,17 +38,20 @@
  **OPTIONAL** add a worm everytime the user clicks the mouse
  
  */
-
+int wormCount=0;
 void setup() {
   fullScreen();
   background(0);
 }
 void draw() {
+  if(frameCount%100==0) {
+    wormCount+=1;
+  }
   noStroke();
   int worm=random(10);
-  for(int i=0; i<=20; i++){
+  for(int i=0; i<=wormCount; i++){
     fill(i%255, frameCount%255, 100);
-  ellipse(getWormX(width), getWormY(height), worm, worm);
+  ellipse(getWormX(i), getWormY(i), worm, worm);
   }
 }
 int random (int maxValue) {
@@ -70,3 +73,6 @@ void makeMagical() {
  float getWormY(int i) {
  return map(noise(i*noiseInterval+1 + frameCount * frequency), 0, 1, 0, height);
  }
+ void mouseClicked() {
+  wormCount+=3;
+}
