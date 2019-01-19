@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-//Academia Khan.
-//Eso malo, ¿eh?
 import ddf.minim.*;
 AudioPlayer player;
 Minim minim;
@@ -44,25 +42,25 @@ void setup() {
   println(height-25);
   if (r == 0) {
     //Zinnia's song
-    player = minim.loadFile("fight.mp3", 1024);
+    //player = minim.loadFile("fight.mp3", 1024);
     //player = minim.loadFile("fightingmusic.mp3", 1024);
-    player.setVolume(.01);
+    //player.setVolume(.01);
   }
   if (r == 1) {
     // de ja vu
-    player = minim.loadFile("othersong.mp3", 1024); 
+    //player = minim.loadFile("othersong.mp3", 1024); 
     //player = minim.loadFile("fightingmusic.mp3", 1024);
-    player.setVolume(.1);
+    //player.setVolume(.1);
   }
   if (r == 2) {
     //epic battle music
-    player = minim.loadFile("fightingmusic.mp3", 1024);
-    player.setVolume(.1);
+    //player = minim.loadFile("fightingmusic.mp3", 1024);
+    //player.setVolume(.1);
   }
   if (r ==3) {
     //Running in the 90's=HA.mp3
-    player = minim.loadFile("fightingmusic.mp3", 1024);
-    player.setVolume(.1);
+    //player = minim.loadFile("fightingmusic.mp3", 1024);
+    //player.setVolume(.1);
   }
   field = loadImage("battlefield.jpg");
   player.loop();
